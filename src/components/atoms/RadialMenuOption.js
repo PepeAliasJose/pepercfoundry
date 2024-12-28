@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 function RadialMenuOption ({ data, text, offset, selectOption, subtitle, to }) {
   const [visible, setVisible] = useState(false)
-
   return (
     <Link
       to={to}

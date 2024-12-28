@@ -131,7 +131,7 @@ function PhotoMenu ({ selectOption }) {
           selectOption={selectOption}
           text={'CONTACTAME'}
           subtitle={'Te estoy esperando'}
-          to={''}
+          to={'/contact'}
         />
         <RadialMenuOption
           offset={0}
@@ -139,7 +139,7 @@ function PhotoMenu ({ selectOption }) {
           selectOption={selectOption}
           text={'AFICIONES'}
           subtitle={'Un poco mas sobre mi'}
-          to={''}
+          to={'/hoobies'}
         />
         <RadialMenuOption
           offset={0}
@@ -147,7 +147,7 @@ function PhotoMenu ({ selectOption }) {
           selectOption={selectOption}
           text={'PROYECTOS'}
           subtitle={'Los proyectos que he creado'}
-          to={''}
+          to={'/proyects'}
         />
         <RadialMenuOption
           offset={0}
@@ -155,7 +155,7 @@ function PhotoMenu ({ selectOption }) {
           selectOption={selectOption}
           text={'ESTUDIOS'}
           subtitle={'Sobre todo lo que se'}
-          to={''}
+          to={'/studies'}
         />
         <RadialMenuOption
           offset={5}
@@ -163,7 +163,7 @@ function PhotoMenu ({ selectOption }) {
           selectOption={selectOption}
           text={'EXPERIENCIA'}
           subtitle={'Mi experiencia laboral'}
-          to={''}
+          to={'/experience'}
         />
         <RadialMenuOption
           offset={12}

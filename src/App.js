@@ -3,11 +3,15 @@ import Landing from './pages/Landing'
 import Aboutme from './pages/Aboutme'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ThemeContext from './contexts/ThemeContext'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
 function App () {
   const { theme } = useContext(ThemeContext)
-  document.body.style.backgroundColor = theme.bgColor
+
+  useEffect(() => {
+    document.body.style.backgroundColor = theme.bgColor
+  }, [])
+
   return (
     <div
       className='App'
