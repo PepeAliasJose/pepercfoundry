@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.w-10\/1 {
+  width: 10vw;
+}
+
+.text-10\/1 {
+  font-size: 12vw;
+  line-height: 0.7;
+  transform-origin: bottom left;
+  transform: translateX(10vw) rotate(-90deg) scaleX(var(--x));
+  max-height: 10vw;
+  height: 10vw;
+}
+
+@font-face {
+  font-family: 'Lato'; /* Name your font family */
+  src: url('./fonts/Lato/Lato-Regular.ttf'); /* Locate the .ttf file within your directory*/
+}
+
+@font-face {
+  font-family: 'Lato bold'; /* Name your font family */
+  src: url('./fonts/Lato/Lato-Bold.ttf'); /* Locate the .ttf file within your directory*/
+}
+
+@font-face {
+  font-family: 'Lato black'; /* Name your font family */
+  src: url('./fonts/Lato/Lato-Black.ttf'); /* Locate the .ttf file within your directory*/
+}
+
+@font-face {
+  font-family: 'Playfair Display SC'; /* Name your font family */
+  src: url('./fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf'); /* Locate the .ttf file within your directory*/
+}
+@font-face {
+  font-family: 'RockNRoll One'; /* Name your font family */
+  src: url('./fonts/RocknRoll_One/RocknRollOne-Regular.ttf'); /* Locate the .ttf file within your directory*/
+}
+
+@font-face {
+  font-family: 'Titillium web'; /* Name your font family */
+  src: url('./fonts/Titillium_Web/TitilliumWeb-Bold.ttf'); /* Locate the .ttf file within your directory*/
+}
