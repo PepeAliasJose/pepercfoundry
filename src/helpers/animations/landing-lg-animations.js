@@ -150,7 +150,9 @@ export function photoIlusionToOriginalAnimation (
     height: {
       value: size
     },
-    opacity: 1,
+    opacity: {
+      value: [1, 1]
+    },
     duration: 500,
     easing: 'easeOutCubic',
     autoplay: true,

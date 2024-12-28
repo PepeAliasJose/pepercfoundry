@@ -15,8 +15,8 @@ export function GlobalAnimationStatusProvider ({ children }) {
     reversed: false
   })
   const [radialMenuPosition, setRadialMenuPosition] = useState({
-    x: -1,
-    y: -1
+    radialMenu: { x: -1, y: -1 },
+    photoTransition: { x: -1, y: -1 }
   })
 
   const [pageHistory, setPageHistory] = useState({

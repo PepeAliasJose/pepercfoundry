@@ -7,16 +7,33 @@ import PhotoMenu from '../components/organisms/PhotoMenu'
 import OptionCounter from '../components/molecules/OptionCounter'
 import * as helpers from '../helpers/animations/landing-lg-animations'
 import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
+import ProfilePhoto from '../components/atoms/ProfilePhoto'
 
 function Landing () {
   const { theme } = useContext(ThemeContext)
-  const { setCurrentPage } = useContext(GlobalAnimationStatusContext)
+  const { pageHistory, setCurrentPage } = useContext(
+    GlobalAnimationStatusContext
+  )
 
   const [opcionSeleccionada, setOpcionSeleccionada] = useState(0)
+  const [animating, setAnimating] = useState(
+    pageHistory.currentPage === 'about'
+  )
+  //Variable para que no parpadeen las transiciones de renderizado condicional
+  const [magic, setMagic] = useState(pageHistory.currentPage === 'landing')
 
   useEffect(() => {
     helpers.guideArrowAnimation()
     setCurrentPage('landing')
+    //Cuando acabe la animacion quitamos el estado de animando para que aparezcan
+    // los componentes de verdad
+    setTimeout(() => {
+      setMagic(true)
+    }, 600)
+    setTimeout(() => {
+      setAnimating(false)
+      setMagic(false)
+    }, 650)
   }, [])
 
   return (
@@ -37,10 +54,23 @@ function Landing () {
             className='lg:w-1/2 lg:h-fit 
           block mt-auto mb-auto '
           >
-            <PhotoMenu
-              key={'PhotoMenuPage'}
-              selectOption={setOpcionSeleccionada}
-            />
+            <div
+              className='w-96 h-96
+                md:ml-24 
+                xl:ml-48'
+            >
+              <div
+                id='landingPhotoAnchor'
+                style={{ transform: 'translateX(42vw) translateY(102vh)' }}
+                className='absolute border-2 border-solid border-orange-600'
+              />
+              {(!animating || magic) && (
+                <PhotoMenu
+                  key={'PhotoMenuPage'}
+                  selectOption={setOpcionSeleccionada}
+                />
+              )}
+            </div>
           </div>
           <div
             className='lg:w-1/2 lg:float-end 
@@ -74,7 +104,12 @@ function Landing () {
         </div>
       </div>
       <div className='w-screen h-screen block'>
-        <OptionCounter key={'optionCounter'} number={opcionSeleccionada} />
+        <div className='absolute'>
+          {animating && <ProfilePhoto toLanding={true} />}
+        </div>
+        {(!animating || magic) && (
+          <OptionCounter key={'optionCounter'} number={opcionSeleccionada} />
+        )}
       </div>
     </div>
   )

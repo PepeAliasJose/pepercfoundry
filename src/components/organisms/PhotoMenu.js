@@ -14,7 +14,8 @@ function PhotoMenu ({ selectOption }) {
   const {
     radialMenuAnimationStatus,
     setRadialMenuAnimationStatus,
-    setRadialMenuPosition
+    setRadialMenuPosition,
+    radialMenuPosition
   } = useContext(
     //Contexto animacion
     GlobalAnimationStatusContext
@@ -25,7 +26,7 @@ function PhotoMenu ({ selectOption }) {
   //Se pierde rendimiento
   const { scrollYProgress } = useScroll()
 
-  const [photo, setPhoto] = useState(1)
+  const [photo, setPhoto] = useState(Math.floor(scrollProgress * (45 - 1) + 1))
   const [loaded, setLoaded] = useState(false)
 
   const [animations, setAnimations] = useState({
@@ -36,7 +37,7 @@ function PhotoMenu ({ selectOption }) {
   function move (l) {
     //Actualizar la posicion del menu
     const { x, y } = getObjectCoordinates('#photoMenuContainer', l)
-    setRadialMenuPosition({ x: x, y: y })
+    setRadialMenuPosition({ ...radialMenuPosition, radialMenu: { x: x, y: y } })
 
     //Animacion de scroll
     animations.menuAnimation?.seek(l * 500)
@@ -112,9 +113,7 @@ function PhotoMenu ({ selectOption }) {
   return (
     <div
       key={'photoMenu'}
-      className='w-96 h-96 z-10 relative transition-all ease-linear duration-300
-    md:ml-24 
-    xl:ml-48'
+      className='w-96 h-96 z-10 relative transition-all ease-linear duration-300'
     >
       <div
         id='photoMenuContainer'
