@@ -12,15 +12,16 @@ function ProfilePhoto ({ toLanding }) {
   const fromMenuToAbout = () => {
     //Obtenemos las coordenadas del contenedor
     const { x, y } = getObjectCoordinates('#aboutPhotoAnchor')
-    setRadialMenuPosition({
-      ...radialMenuPosition,
-      photoTransition: { x: x, y: y }
-    })
     const rx = radialMenuPosition.radialMenu.x
     const ry = radialMenuPosition.radialMenu.y
 
     const ox = rx == -1 ? 0 : rx - x
     const oy = ry == -1 ? -700 : ry - y
+
+    setRadialMenuPosition({
+      ...radialMenuPosition,
+      photoTransition: { x: x, y: y, isOld: ry != -1 }
+    })
     //Animacion para que la foto se mueva a la posicion de destino
     photoIlusionToOriginalAnimation(
       setPhoto,

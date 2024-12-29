@@ -11,33 +11,38 @@ import ProfilePhoto from '../components/atoms/ProfilePhoto'
 
 function Landing () {
   const { theme } = useContext(ThemeContext)
-  const { pageHistory, setCurrentPage } = useContext(
+  const { pageHistory, setCurrentPage, radialMenuPosition } = useContext(
     GlobalAnimationStatusContext
   )
 
   const [opcionSeleccionada, setOpcionSeleccionada] = useState(0)
   const [animating, setAnimating] = useState(
-    pageHistory.currentPage === 'about'
+    pageHistory.currentPage === 'about' && radialMenuPosition.radialMenu.x != -1
   )
   //Variable para que no parpadeen las transiciones de renderizado condicional
-  const [magic, setMagic] = useState(pageHistory.currentPage === 'landing')
+  const [magic, setMagic] = useState(
+    pageHistory.currentPage === 'landing' &&
+      radialMenuPosition.radialMenu.x == -1
+  )
 
   useEffect(() => {
     helpers.guideArrowAnimation()
     setCurrentPage('landing')
+    console.log('Landing loaded...')
     //Cuando acabe la animacion quitamos el estado de animando para que aparezcan
     // los componentes de verdad
     setTimeout(() => {
       setMagic(true)
-    }, 600)
+    }, 700)
     setTimeout(() => {
       setAnimating(false)
       setMagic(false)
-    }, 650)
+    }, 750)
   }, [])
 
   return (
     <div
+      exit={{ opacity: 0, animationDuration: 1000, transitionDuration: 1000 }}
       style={{
         height: '200vh',
         width: '100vw',

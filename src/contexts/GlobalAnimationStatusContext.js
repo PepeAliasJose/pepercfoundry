@@ -20,8 +20,8 @@ export function GlobalAnimationStatusProvider ({ children }) {
   })
 
   const [pageHistory, setPageHistory] = useState({
-    currentPage: '',
-    previousPage: ''
+    currentPage: 'none',
+    previousPage: 'none'
   })
 
   const setCurrentPage = nueva => {
