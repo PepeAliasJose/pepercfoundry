@@ -1,17 +1,18 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import ThemeContext from '../contexts/ThemeContext'
 import LateralText from '../components/atoms/LateralText'
-import ProfilePhoto from '../components/atoms/ProfilePhoto'
 import Name from '../components/atoms/Name'
 import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
+import ScrollContext from '../contexts/ScrollContext'
 
 function Aboutme () {
   const { theme } = useContext(ThemeContext)
   const { setCurrentPage } = useContext(GlobalAnimationStatusContext)
-
-  const [show, setShow] = useState(false)
+  const { setScrollProgress } = useContext(ScrollContext) //Contexto scroll
 
   useEffect(() => {
+    console.log('About loaded...')
+    setScrollProgress(0)
     setCurrentPage('about')
   }, [])
 
@@ -24,8 +25,13 @@ function Aboutme () {
       xl:w-5/12 '
       >
         <div className='mt-40 w-72 h-72 ml-auto'>
-          <div id='aboutPhotoAnchor'>
-            <ProfilePhoto />
+          <div id='basePhotoAnchorAbout'>
+            {/*<ProfilePhoto />*/}
+            <img
+              className='rounded-full border-2 border-black border-solid'
+              alt='foto'
+              src='./perfil/perfil-1.jpg'
+            />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import GlobalAnimationStatusContext from '../../contexts/GlobalAnimationStatusContext'
-import { photoIlusionToOriginalAnimation } from '../../helpers/animations/landing-lg-animations'
+import { photoIlusionAnimation } from '../../helpers/animations/landing-lg-animations'
 import { getObjectCoordinates } from '../../helpers/functions/positionSynchronizerFunctions'
 import { useContext, useEffect, useState } from 'react'
 
@@ -23,7 +23,7 @@ function ProfilePhoto ({ toLanding }) {
       photoTransition: { x: x, y: y, isOld: ry != -1 }
     })
     //Animacion para que la foto se mueva a la posicion de destino
-    photoIlusionToOriginalAnimation(
+    photoIlusionAnimation(
       setPhoto,
       0,
       0,
@@ -44,7 +44,7 @@ function ProfilePhoto ({ toLanding }) {
     const oy = ry == -1 ? -700 : ry
     //console.log(x, y, ox, oy)
     //Animacion para que la foto se mueva a la posicion de destino
-    photoIlusionToOriginalAnimation(
+    photoIlusionAnimation(
       setPhoto,
       x,
       y,

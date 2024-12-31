@@ -9,13 +9,14 @@ import {
   getWindowDimensions
 } from '../../helpers/functions/positionSynchronizerFunctions'
 
-function PhotoMenu ({ selectOption }) {
+function PhotoMenu ({ location }) {
   const { scrollProgress, setScrollProgress } = useContext(ScrollContext) //Contexto scroll
   const {
     radialMenuAnimationStatus,
     setRadialMenuAnimationStatus,
     setRadialMenuPosition,
-    radialMenuPosition
+    radialMenuPosition,
+    pageHistory
   } = useContext(
     //Contexto animacion
     GlobalAnimationStatusContext
@@ -28,92 +29,254 @@ function PhotoMenu ({ selectOption }) {
 
   const [photo, setPhoto] = useState(Math.floor(scrollProgress * (45 - 1) + 1))
   const [loaded, setLoaded] = useState(false)
+  const [animating, setAnimating] = useState(true)
 
   const [animations, setAnimations] = useState({
     menuAnimation: null,
     radialAnimation: null
   })
 
-  function move (l) {
-    //Actualizar la posicion del menu
-    const { x, y } = getObjectCoordinates('#photoMenuContainer', l)
-    setRadialMenuPosition({ ...radialMenuPosition, radialMenu: { x: x, y: y } })
+  function showMenu () {
+    //Desplegar el menu
+    radialMenuAnimationStatus.reversed && animations.radialAnimation.reverse()
+    animations.radialAnimation.play()
+    //Que solo si la animacion esta definida se actualice el estado,
+    //dado que si no esta definida no se va a ejecutar y no deberia cambiar el estado
+    animations.radialAnimation &&
+      setRadialMenuAnimationStatus({
+        isVisible: true,
+        reversed: false
+      })
+  }
 
+  function hideMenu () {
+    //Esconder el menu
+    animations.radialAnimation?.reverse()
+    animations.radialAnimation?.play()
+    animations.radialAnimation &&
+      setRadialMenuAnimationStatus({
+        isVisible: false,
+        reversed: true
+      })
+  }
+
+  function move (l) {
     //Animacion de scroll
     animations.menuAnimation?.seek(l * 500)
     if (l >= 1) {
       setPhoto(45)
+    } else if (l == 0) {
+      setPhoto(1)
     }
-
     //mostrar o esconder el menu
     if (l >= 1 && !radialMenuAnimationStatus.isVisible) {
-      //Desplegar el menu
-      radialMenuAnimationStatus.reversed &&
-        animations.radialAnimation?.reverse()
-      animations.radialAnimation?.play()
-      //Que solo si la animacion esta definida se actualice el estado,
-      //dado que si no esta definida no se va a ejecutar y no deberia cambiar el estado
-
-      //BUG: al navegar por el react router, esta funcion se ejecuta en el mismo MS que otras
-      //que actualizan el estado, con lo que una sobreescribe a la otra y genere un conflicto
-      //SOLUCION: Resulta que al volver de la otra pagina, el que ejecutaba la funcion era un
-      //useState sin el contexto como dependencia, entonces llamada desde ahi la funcion,
-      // no cambia nada
-
-      animations.radialAnimation &&
-        setRadialMenuAnimationStatus({
-          isVisible: true,
-          reversed: false
-        })
+      showMenu()
     } else if (l < 0.95 && radialMenuAnimationStatus.isVisible) {
-      //Esconder el menu
-      animations.radialAnimation?.reverse()
-      animations.radialAnimation?.play()
-      animations.radialAnimation &&
-        setRadialMenuAnimationStatus({
-          isVisible: false,
-          reversed: true
-        })
+      hideMenu()
     }
-
     setScrollProgress(l)
   }
 
   useMotionValueEvent(scrollYProgress, 'change', latest => {
     setScrollProgress(latest)
-    move(latest)
+    //console.log('Scroll: ', latest)
+    //Si no estamos en landing no nos movemos en scroll
+    location === '/' &&
+      pageHistory.currentPage === 'landing' &&
+      !animating &&
+      move(latest) // Y escondemos el menu
+    location !== '/' && radialMenuAnimationStatus.isVisible && hideMenu()
   })
 
-  //Por las impicaciones que tiene estas animaciones, que dependen tanto del scroll, no he podido
-  //programar la funcion sin este useEffect,
-  useEffect(() => {
-    loaded && move(scrollProgress)
-  }, [loaded, radialMenuAnimationStatus])
-
-  useEffect(() => {
-    //Alto y ancho de la ventana
-    const { width, height } = getWindowDimensions()
-    //Meter la animacion a un estado para manejarla despues
-    setAnimations({
-      //Animacion de la foto al bajar responsiva
-      menuAnimation: helpers.menuScrollAnimation(setPhoto),
-      //Animacion de desplegar el menu
-      radialAnimation: helpers.menuAppearAnimation(height)
+  function firstLoadLanding (bottom) {
+    const { x, y } = getObjectCoordinates('#basePhotoAnchorLanding')
+    //Actualizar la posicion del menu
+    const { x: fx, y: fy } = getObjectCoordinates('#finalPhotoAnchorLanding', 1)
+    setRadialMenuPosition({
+      ...radialMenuPosition,
+      radialMenu: { x: fx, y: fy }
     })
-    setLoaded(true)
+    //Si estamos en landing page cargar animaciones de scroll
+    setAnimations({
+      //Animacion de la foto al bajar
+      ...animations,
+      menuAnimation: helpers.menuScrollAnimation(
+        x,
+        y,
+        setPhoto,
+        setRadialMenuPosition
+      )
+    })
+    bottom &&
+      setAnimations(a => {
+        a.menuAnimation.seek(1)
+        return a
+      })
+  }
 
-    return () => {
-      setRadialMenuAnimationStatus({
-        isVisible: false,
-        reversed: false
+  function moverMenuToAbout () {
+    setAnimating(true)
+    //Cuando salimos estamos animando
+    console.log('Mover menu to about')
+    const { x, y } = getObjectCoordinates('#basePhotoAnchorAbout')
+
+    setRadialMenuPosition({
+      ...radialMenuPosition,
+      photoTransition: { x: x, y: y }
+    })
+
+    helpers.photoIlusionAnimation(
+      setPhoto,
+      x,
+      y,
+      radialMenuPosition.radialMenu.x,
+      radialMenuPosition.radialMenu.y,
+      false,
+      'toSmall'
+    )
+    //Opacity a 0
+    helpers.hide()
+  }
+
+  function moverMenuToLanding () {
+    console.log('Mover menu to landing')
+    window.scrollTo(1, document.body.scrollHeight)
+    const { x, y } = getObjectCoordinates('#finalPhotoAnchorLanding', 1)
+    const a = helpers.photoIlusionAnimation(
+      setPhoto,
+      x,
+      y,
+      radialMenuPosition.photoTransition.x,
+      radialMenuPosition.photoTransition.y,
+      true,
+      'toBig'
+    )
+    a.finished.then(() => {
+      setAnimating(false)
+      move(1)
+    })
+  }
+
+  function firstLoadAbout () {
+    const { x, y } = getObjectCoordinates('#basePhotoAnchorAbout')
+    setRadialMenuPosition({
+      ...radialMenuPosition,
+      photoTransition: { x: x, y: y }
+    })
+    const c = helpers.startPhotoToX(x, y, '18rem')
+    //Opacity a 0
+    c.finished.then(() => {
+      helpers.hide()
+    })
+  }
+
+  function fixResize () {
+    if (location === '/') {
+      //Areglamos la animacion
+      const { x, y } = getObjectCoordinates('#basePhotoAnchorLanding')
+      setAnimations({
+        ...animations,
+        menuAnimation: helpers.menuScrollAnimation(
+          x,
+          y,
+          setPhoto,
+          setRadialMenuPosition
+        )
+      })
+      setAnimations(e => {
+        e.menuAnimation.seek(scrollProgress * 500)
+        return e
+      })
+      const { x: fx, y: fy } = getObjectCoordinates(
+        '#finalPhotoAnchorLanding',
+        1
+      )
+      setRadialMenuPosition({
+        ...radialMenuPosition,
+        radialMenu: { x: fx, y: fy }
+      })
+    } else if (location === '/about') {
+      const { x, y } = getObjectCoordinates('#basePhotoAnchorAbout')
+      setRadialMenuPosition({
+        ...radialMenuPosition,
+        photoTransition: { x: x, y: y }
       })
     }
+  }
+
+  // ***** USE EFECTS *****
+
+  useEffect(() => {
+    window.addEventListener('resize', fixResize)
+
+    return () => {
+      window.removeEventListener('resize', fixResize)
+    }
+  }, [animations, scrollProgress])
+
+  useEffect(() => {
+    loaded && move(scrollProgress)
+  }, [loaded])
+
+  useEffect(() => {
+    //Cuando llegamos a la pagina de about desde otra pagina
+    //  movemos el menu a la posicion de la foto
+    location === '/about' &&
+      pageHistory.currentPage === 'about' &&
+      pageHistory.previousPage !== 'none' &&
+      moverMenuToAbout()
+
+    //Cuando llegamos a la pagina de about desde otra pagina
+    //  movemos el menu a la posicion de la foto
+    location === '/' &&
+      pageHistory.currentPage === 'landing' &&
+      pageHistory.previousPage !== 'none' &&
+      moverMenuToLanding()
+
+    location === '/' && helpers.show()
+    //Si llegamos a la pagina luego ahora es cuando cargamos el scroll
+    if (
+      location === '/' &&
+      pageHistory.previousPage !== 'none' &&
+      animations.menuAnimation === null
+    ) {
+      console.log('Cargar landing como segunda pagina...')
+      firstLoadLanding(true)
+    }
+    //Si llegamos a otra pagina animar desde su posicion a posicion de destino
+  }, [location, pageHistory])
+
+  useEffect(() => {
+    const { width, height } = getWindowDimensions()
+    console.log(location)
+
+    //Si llegamos a landing primero cargamos las animaciones del scroll
+    location === '/' && firstLoadLanding()
+    //Si llegamos de primeras no estamos animando
+    location === '/' && console.log('Cargar landing como primera pagina...')
+    location === '/' && setAnimating(false)
+
+    //Si llegamos a about primero cargamos el menu en su posicion
+    location === '/about' && firstLoadAbout()
+
+    //Siempre cargamos la animacion del menu deplegable
+    setAnimations(a => {
+      return {
+        ...a,
+        radialAnimation: helpers.menuAppearAnimation(height)
+      }
+    })
+    setLoaded(true)
   }, [])
 
   return (
     <div
       key={'photoMenu'}
-      className='w-96 h-96 z-10 relative transition-all ease-linear duration-300'
+      className={
+        loaded
+          ? 'w-96 h-full py-auto z-10 transition-all ease-linear duration-300 sticky top-0'
+          : 'w-96 opacity-0 h-full py-auto z-10 transition-all ease-linear duration-300 sticky top-0'
+      }
     >
       <div
         id='photoMenuContainer'
@@ -128,7 +291,6 @@ function PhotoMenu ({ selectOption }) {
         <RadialMenuOption
           offset={4}
           data={1}
-          selectOption={selectOption}
           text={'CONTACTAME'}
           subtitle={'Te estoy esperando'}
           to={'/contact'}
@@ -136,7 +298,6 @@ function PhotoMenu ({ selectOption }) {
         <RadialMenuOption
           offset={0}
           data={2}
-          selectOption={selectOption}
           text={'AFICIONES'}
           subtitle={'Un poco mas sobre mi'}
           to={'/hoobies'}
@@ -144,7 +305,6 @@ function PhotoMenu ({ selectOption }) {
         <RadialMenuOption
           offset={0}
           data={3}
-          selectOption={selectOption}
           text={'PROYECTOS'}
           subtitle={'Los proyectos que he creado'}
           to={'/proyects'}
@@ -152,7 +312,6 @@ function PhotoMenu ({ selectOption }) {
         <RadialMenuOption
           offset={0}
           data={4}
-          selectOption={selectOption}
           text={'ESTUDIOS'}
           subtitle={'Sobre todo lo que se'}
           to={'/studies'}
@@ -160,7 +319,6 @@ function PhotoMenu ({ selectOption }) {
         <RadialMenuOption
           offset={5}
           data={5}
-          selectOption={selectOption}
           text={'EXPERIENCIA'}
           subtitle={'Mi experiencia laboral'}
           to={'/experience'}
@@ -168,7 +326,6 @@ function PhotoMenu ({ selectOption }) {
         <RadialMenuOption
           offset={12}
           data={6}
-          selectOption={selectOption}
           text={'SOBRE MÍ'}
           subtitle={'Mi historia y habilidades'}
           to={'/about'}

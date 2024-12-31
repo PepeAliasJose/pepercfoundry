@@ -31,6 +31,8 @@ export function GlobalAnimationStatusProvider ({ children }) {
     })
   }
 
+  const [optionSelection, setOptionSelection] = useState(0)
+
   const ret = {
     optionNumberAnimationStatus,
     setOptionNumberAnimationStatus,
@@ -39,7 +41,9 @@ export function GlobalAnimationStatusProvider ({ children }) {
     radialMenuPosition,
     setRadialMenuPosition,
     pageHistory,
-    setCurrentPage
+    setCurrentPage,
+    optionSelection,
+    setOptionSelection
   }
 
   return (

@@ -1,4 +1,5 @@
 import anime from 'animejs'
+import { getObjectCoordinates } from '../functions/positionSynchronizerFunctions'
 
 /**
  *
@@ -24,14 +25,21 @@ export const guideArrowAnimation = () => {
  * @param {function} setPhoto funcion para cambiar la foto en scroll
  * @returns la animacion que sigue el scroll
  */
-export const menuScrollAnimation = setPhoto => {
+export const menuScrollAnimation = (ox, oy, setPhoto) => {
+  const { x, y } = getObjectCoordinates('#finalPhotoAnchorLanding', 1)
   return anime({
     targets: '.photoMenuContainer',
     translateY: {
-      value: [0, '102vh']
+      value: [oy + 'px', y]
     },
     translateX: {
-      value: [0, '42vw']
+      value: [ox + 'px', x]
+    },
+    width: {
+      value: ['24rem', '24rem']
+    },
+    height: {
+      value: ['24rem', '24rem']
     },
     duration: 500,
     easing: 'linear',
@@ -117,7 +125,7 @@ export const verticalTextAppearAnimation = () => {
  * @param {string} changeSize toSmall, toBig, small, big
  * @returns La animacion
  */
-export function photoIlusionToOriginalAnimation (
+export function photoIlusionAnimation (
   setPhoto,
   dx,
   dy,
@@ -137,31 +145,50 @@ export function photoIlusionToOriginalAnimation (
   size = changeSize === 'big' ? big : size
 
   return anime({
-    targets: '.aboutPhoto',
-    translateY: {
-      value: [oy, dy]
-    },
-    translateX: {
-      value: [ox, dx]
-    },
-    width: {
-      value: size
-    },
-    height: {
-      value: size
-    },
-    opacity: {
-      value: [1, 1]
-    },
-    duration: 650,
+    targets: '.photoMenuContainer',
+    translateY: { value: [oy + 'px', dy + 'px'] },
+    translateX: { value: [ox + 'px', dx + 'px'] },
+    width: { value: size },
+    height: { value: size },
+    opacity: { value: [1, 1] },
+    duration: 700,
     easing: 'easeOutCubic',
     autoplay: true,
-    delay: 100,
+    delay: 0,
     update: function (anim) {
       const photoNumber = Math.floor((anim.progress / 100) * (45 - 1) + 1)
       direction && setPhoto(photoNumber)
       !direction && setPhoto(46 - photoNumber)
     }
+  })
+}
+export function hide () {
+  return anime({
+    targets: '.photoMenuContainer',
+    opacity: 0,
+    easing: 'linear',
+    duration: 100,
+    delay: 600
+  })
+}
+export function show () {
+  return anime({
+    targets: '.photoMenuContainer',
+    opacity: 1,
+    easing: 'linear',
+    duration: 1
+  })
+}
+
+export function startPhotoToX (dx, dy, size) {
+  return anime({
+    targets: '.photoMenuContainer',
+    translateY: { value: [dy, dy] },
+    translateX: { value: [dx, dx] },
+    width: size,
+    height: size,
+    easing: 'linear',
+    duration: 10
   })
 }
 

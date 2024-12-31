@@ -20,10 +20,10 @@ export function getObjectCoordinates (id, scroll) {
   const { height } = getWindowDimensions()
   const bodyRect = document.body.getBoundingClientRect()
   const photo = document.querySelector(id)
-  const e = photo.getBoundingClientRect()
+  const e = photo?.getBoundingClientRect()
 
   const offset = height * (isNaN(scroll) ? 0 : scroll)
-  const y = e.top - bodyRect.top - offset
-  const x = e.left - bodyRect.left
+  const y = e?.top - bodyRect.top - offset
+  const x = e?.left - bodyRect.left
   return { x, y }
 }

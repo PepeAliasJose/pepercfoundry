@@ -1,43 +1,26 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import ThemeContext from '../contexts/ThemeContext'
 import NameTitle from '../components/atoms/NameTitle'
 import Quote from '../components/atoms/Quote'
 import ReadyForWork from '../components/atoms/ReadyForWork'
-import PhotoMenu from '../components/organisms/PhotoMenu'
 import OptionCounter from '../components/molecules/OptionCounter'
 import * as helpers from '../helpers/animations/landing-lg-animations'
 import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
-import ProfilePhoto from '../components/atoms/ProfilePhoto'
+import { getObjectCoordinates } from '../helpers/functions/positionSynchronizerFunctions'
 
 function Landing () {
   const { theme } = useContext(ThemeContext)
-  const { pageHistory, setCurrentPage, radialMenuPosition } = useContext(
-    GlobalAnimationStatusContext
-  )
-
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState(0)
-  const [animating, setAnimating] = useState(
-    pageHistory.currentPage === 'about' && radialMenuPosition.radialMenu.x != -1
-  )
-  //Variable para que no parpadeen las transiciones de renderizado condicional
-  const [magic, setMagic] = useState(
-    pageHistory.currentPage === 'landing' &&
-      radialMenuPosition.radialMenu.x == -1
-  )
+  const { setCurrentPage, radialMenuPosition, setRadialMenuPosition } =
+    useContext(GlobalAnimationStatusContext)
 
   useEffect(() => {
     helpers.guideArrowAnimation()
     setCurrentPage('landing')
-    console.log('Landing loaded...')
-    //Cuando acabe la animacion quitamos el estado de animando para que aparezcan
-    // los componentes de verdad
-    setTimeout(() => {
-      setMagic(true)
-    }, 700)
-    setTimeout(() => {
-      setAnimating(false)
-      setMagic(false)
-    }, 750)
+    const { x: fx, y: fy } = getObjectCoordinates('#finalPhotoAnchorLanding', 1)
+    setRadialMenuPosition({
+      ...radialMenuPosition,
+      radialMenu: { x: fx, y: fy }
+    })
   }, [])
 
   return (
@@ -65,16 +48,19 @@ function Landing () {
                 xl:ml-48'
             >
               <div
-                id='landingPhotoAnchor'
+                id='finalPhotoAnchorLanding'
                 style={{ transform: 'translateX(42vw) translateY(102vh)' }}
-                className='absolute border-2 border-solid border-orange-600'
+                className='absolute border-2 border-solid border-green-600'
               />
-              {(!animating || magic) && (
-                <PhotoMenu
-                  key={'PhotoMenuPage'}
-                  selectOption={setOpcionSeleccionada}
-                />
-              )}
+              <div
+                id='basePhotoAnchorLanding'
+                className='absolute border-2 border-solid border-green-600'
+              />
+              <img
+                className='rounded-full border-2 border-black border-solid'
+                alt='foto'
+                src='./perfil/perfil-1.jpg'
+              />
             </div>
           </div>
           <div
@@ -100,21 +86,19 @@ function Landing () {
             </div>
           </div>
         </div>
-        <div className='w-14 h-14 mr-auto ml-auto pb-4'>
-          <img
-            alt='arrow'
-            src='./landingResources/Arrow-down-circle.svg'
-            className='guideArrow w-14 h-14'
-          />
+        <div className='absolute bottom-0 w-screen'>
+          <div className='w-14 h-14  flex relative mr-auto ml-auto pb-4'>
+            <img
+              alt='arrow'
+              src='./landingResources/Arrow-down-circle.svg'
+              className='guideArrow w-14 h-14'
+            />
+          </div>
         </div>
       </div>
       <div className='w-screen h-screen block'>
-        <div className='absolute'>
-          {animating && <ProfilePhoto toLanding={true} />}
-        </div>
-        {(!animating || magic) && (
-          <OptionCounter key={'optionCounter'} number={opcionSeleccionada} />
-        )}
+        <div className='absolute'></div>
+        <OptionCounter key={'optionCounter'} />
       </div>
     </div>
   )

@@ -4,9 +4,12 @@ import ThemeContext from '../../contexts/ThemeContext'
 import GlobalAnimationStatusContext from '../../contexts/GlobalAnimationStatusContext'
 import ScrollContext from '../../contexts/ScrollContext'
 
-function OptionCounter ({ number }) {
-  const { optionNumberAnimationStatus, setOptionNumberAnimationStatus } =
-    useContext(GlobalAnimationStatusContext)
+function OptionCounter () {
+  const {
+    optionNumberAnimationStatus,
+    setOptionNumberAnimationStatus,
+    optionSelection
+  } = useContext(GlobalAnimationStatusContext)
   const salida = 0.9
 
   const { scrollProgress } = useContext(ScrollContext)
@@ -77,7 +80,7 @@ function OptionCounter ({ number }) {
       <div className='flex text-black pt -rotate-90 mt-5 -mr-3'>
         0
         <div className='numero text-white -ml-5'>
-          <Number pos={number} />
+          <Number pos={optionSelection} />
         </div>
       </div>
     </div>

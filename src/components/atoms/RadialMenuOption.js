@@ -1,17 +1,19 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import GlobalAnimationStatusContext from '../../contexts/GlobalAnimationStatusContext'
 
-function RadialMenuOption ({ data, text, offset, selectOption, subtitle, to }) {
+function RadialMenuOption ({ data, text, offset, subtitle, to }) {
   const [visible, setVisible] = useState(false)
+  const { setOptionSelection } = useContext(GlobalAnimationStatusContext)
   return (
     <Link
       to={to}
       onMouseEnter={() => {
-        selectOption(7 - data)
+        setOptionSelection(7 - data)
         setVisible(true)
       }}
       onMouseLeave={() => {
-        selectOption(0)
+        setOptionSelection(0)
         setVisible(false)
       }}
       //border-solid border-black border-2
