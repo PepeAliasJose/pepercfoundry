@@ -5,8 +5,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import ThemeContext from './contexts/ThemeContext'
 import { useContext, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import GlobalAnimationStatusContext from './contexts/GlobalAnimationStatusContext'
-import PhotoMenu from './components/organisms/PhotoMenu'
+import Base from './components/organisms/Base'
 
 function App () {
   const { theme } = useContext(ThemeContext)
@@ -33,9 +32,9 @@ function Body () {
   //console.log(location.pathname)
 
   return (
-    <div>
-      <PhotoMenu location={location.pathname} />
+    <div className='overflow-x-hidden p-10 w-screen h-screen'>
       <AnimatePresence mode={'wait'}>
+        <Base />
         <Routes location={location} key={location.pathname}>
           <Route path='/' element={<LandingMotion />} />
           <Route path='/about' element={<AboutMotion />} />
@@ -50,7 +49,9 @@ function LandingMotion ({ hasTransition }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.5, delay: 1.05 }}
+      exit={{ opacity: 0 }}
+      className='w-full h-full'
     >
       <Landing />
     </motion.div>
