@@ -1,12 +1,20 @@
+import RadialMenuOption from '../atoms/RadialMenuOption'
+
 function Menu () {
   return (
     <div
-      exit={{ opacity: 0, animationDuration: 1000, transitionDuration: 1000 }}
-      className='w-screen h-screen overflow-x-hidden md:flex md:flex-row p-6'
+      className='pointer-events-auto flex flex-col items-end mt-20 pb-80'
+      style={{
+        transformOrigin: 'center right',
+        transform: 'perspective(1500px) rotateY(-15deg)'
+      }}
     >
-      <div className='md:w-1/3 border-violet-600 border-solid border-2 float-left mr-auto'>
-        <div className='w-full'>menu</div>
-      </div>
+      <RadialMenuOption text={'SOBRE MÍ'} subtitle={'Hola'} />
+      <RadialMenuOption text={'EXPERIENCIA'} subtitle={'Hola'} />
+      <RadialMenuOption text={'ESTUDIOS'} subtitle={'Hola'} />
+      <RadialMenuOption text={'PROYECTOS'} subtitle={'Hola'} />
+      <RadialMenuOption text={'AFICIONES'} subtitle={'Hola'} />
+      <RadialMenuOption text={'CONTACTAME'} subtitle={'Hola'} />
     </div>
   )
 }

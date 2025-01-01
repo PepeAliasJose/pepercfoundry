@@ -17,8 +17,8 @@ function NameTitle ({ style }) {
   return (
     <div
       className='myName text-3xl md:text-5xl text-left
-       w-min font-black ml-auto overflow-x-hidden overflow-y-hidden
-       pointer-events-auto'
+       w-min font-black relative ml-auto overflow-x-hidden overflow-y-hidden
+       pointer-events-auto z-50'
       style={{ fontFamily: 'Lato black', WebkitTextStroke: '1px black' }}
     >
       <div className='it'>JOSÉ</div>

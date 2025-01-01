@@ -5,7 +5,7 @@ function Base () {
   return (
     <div className='absolute w-screen h-screen -m-10 p-10 overflow-y-hidden pointer-events-none'>
       <div className='absolute left-10 top-10'>
-        <NameTitle style={''} />
+        <NameTitle />
       </div>
       <Footer />
     </div>

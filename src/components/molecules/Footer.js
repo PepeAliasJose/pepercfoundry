@@ -22,7 +22,7 @@ function Footer () {
       style={{ fontFamily: 'Lato' }}
       className='myFooter sm:w-full sm:h-5 flex justify-start 
       items-center gap-10 absolute bottom-10 -mx-10 px-10
-      pointer-events-auto'
+      pointer-events-auto z-50'
     >
       <div className='el opacity-0'>781peperc@gmail.com</div>
       <div className='el opacity-0'>linkedin</div>

@@ -6,6 +6,7 @@ import ThemeContext from './contexts/ThemeContext'
 import { useContext, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Base from './components/organisms/Base'
+import MenuContainer from './components/atoms/MenuContainer'
 
 function App () {
   const { theme } = useContext(ThemeContext)
@@ -34,11 +35,12 @@ function Body () {
   return (
     <div className='overflow-x-hidden p-10 w-screen h-screen'>
       <AnimatePresence mode={'wait'}>
-        <Base />
+        <Base key='base' />
         <Routes location={location} key={location.pathname}>
           <Route path='/' element={<LandingMotion />} />
           <Route path='/about' element={<AboutMotion />} />
         </Routes>
+        <MenuContainer key='menu' />
       </AnimatePresence>
     </div>
   )
@@ -49,7 +51,7 @@ function LandingMotion ({ hasTransition }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 1.05 }}
+      transition={{ duration: 0.5, delay: 1.1 }}
       exit={{ opacity: 0 }}
       className='w-full h-full'
     >

@@ -62,3 +62,8 @@ body {
   font-family: 'Titillium web'; /* Name your font family */
   src: url('./fonts/Titillium_Web/TitilliumWeb-Bold.ttf'); /* Locate the .ttf file within your directory*/
 }
+
+@font-face {
+  font-family: 'Bio Sans'; /* Name your font family */
+  src: url('./fonts/biosans/Flat-it\ -\ Bio\ Sans\ Bold.otf'); /* Locate the .ttf file within your directory*/
+}
