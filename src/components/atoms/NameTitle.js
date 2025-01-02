@@ -1,7 +1,11 @@
 import anime from 'animejs'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import GlobalAnimationStatusContext from '../../contexts/GlobalAnimationStatusContext'
 
 function NameTitle ({ style }) {
+  const { logoTransparent } = useContext(GlobalAnimationStatusContext)
+
   useEffect(() => {
     anime({
       targets: '.myName .it',
@@ -15,16 +19,26 @@ function NameTitle ({ style }) {
   }, [])
 
   return (
-    <div
-      className='myName text-3xl md:text-5xl text-left
-       w-min font-black relative ml-auto overflow-x-hidden overflow-y-hidden
-       pointer-events-auto z-50'
-      style={{ fontFamily: 'Lato black', WebkitTextStroke: '1px black' }}
-    >
-      <div className='it'>JOSÉ</div>
-      <div className='it'>RODRÍGUEZ</div>
-      <div className='it'>CÁCERES</div>
-    </div>
+    <Link to='/'>
+      <div
+        id='myName'
+        className='myName 
+        text-lg sm:text-3xl md:text-5xl text-left leading-none
+       w-min flex flex-col ml-auto overflow-x-hidden overflow-y-hidden
+       pointer-events-auto z-50 
+       fixed left-10 bottom-10 
+       transition-colors '
+        style={{
+          fontFamily: 'Lato black',
+          WebkitTextStroke: true ? '0.5px #909090' : '0px',
+          color: logoTransparent ? 'transparent' : '#101010'
+        }}
+      >
+        <div className='it'>JOSÉ</div>
+        <div className='it'>RODRÍGUEZ</div>
+        <div className='it'>CÁCERES</div>
+      </div>
+    </Link>
   )
 }
 

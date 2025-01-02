@@ -4,6 +4,8 @@ import { createContext, useState } from 'react'
 const ThemeContext = createContext()
 
 export function ThemeProvider ({ children }) {
+  //3986AC
+
   const [theme, setTheme] = useState({
     bgColor: '#c1cbcd',
     fontColor: '#101010',

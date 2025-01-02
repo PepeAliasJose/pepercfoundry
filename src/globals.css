@@ -6,6 +6,7 @@ body {
   padding: 0;
   margin: 0;
   overflow-x: hidden;
+  overflow-y: scroll;
   text-rendering: optimizeLegibility;
 }
 
@@ -32,6 +33,10 @@ body {
 
 .it {
   transform: translateX(100%);
+}
+
+.w-highlight {
+  width: 25rem;
 }
 
 @font-face {

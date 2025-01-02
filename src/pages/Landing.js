@@ -1,21 +1,16 @@
 import { useContext, useEffect } from 'react'
 import ThemeContext from '../contexts/ThemeContext'
 import Quote from '../components/atoms/Quote'
-import * as helpers from '../helpers/animations/landing-lg-animations'
 import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
 
 function Landing () {
   const { theme } = useContext(ThemeContext)
-  const { setCurrentPage, radialMenuPosition, setRadialMenuPosition } =
-    useContext(GlobalAnimationStatusContext)
-
-  useEffect(() => {
-    helpers.guideArrowAnimation()
-  }, [])
 
   return (
-    <div className='w-full h-full flex flex-col'>
-      <Quote />
+    <div className='w-full h-screen flex opacity-1 p-10 '>
+      <div className='flex self-center -mt-20'>
+        <Quote />
+      </div>
     </div>
   )
 }

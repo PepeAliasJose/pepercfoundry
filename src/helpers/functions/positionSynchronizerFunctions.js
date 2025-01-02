@@ -1,3 +1,17 @@
+export function getMenuItems () {
+  const i = document.querySelector('#myMenu')
+  //Esto da un HTMLCollection, y tenemos que convertirlo a un array
+  return [...i.children]
+}
+
+export function getAllMenuItemsUnselected (id) {
+  const items = getMenuItems()
+  const res = items.filter(i => {
+    return i.id !== id
+  })
+  return res
+}
+
 /**
  * @returns width - ancho de la ventana, height - alto de la ventana
  */

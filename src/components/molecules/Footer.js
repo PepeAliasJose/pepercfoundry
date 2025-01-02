@@ -1,7 +1,10 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import anime from 'animejs'
+import ThemeContext from '../../contexts/ThemeContext'
 
 function Footer () {
+  const { theme } = useContext(ThemeContext)
+
   useEffect(() => {
     anime({
       targets: '.myFooter .el',
@@ -19,14 +22,16 @@ function Footer () {
 
   return (
     <div
-      style={{ fontFamily: 'Lato' }}
+      style={{
+        fontFamily: 'Lato'
+      }}
       className='myFooter sm:w-full sm:h-5 flex justify-start 
-      items-center gap-10 absolute bottom-10 -mx-10 px-10
+      items-center gap-10 fixed top-0 p-10 mx-0
       pointer-events-auto z-50'
     >
-      <div className='el opacity-0'>781peperc@gmail.com</div>
       <div className='el opacity-0'>linkedin</div>
       <div className='el opacity-0'>github</div>
+      <div className='el opacity-0'>781peperc@gmail.com</div>
 
       <div className='ml-auto flex gap-8'>
         <div className='el opacity-0'>COLOR</div>
