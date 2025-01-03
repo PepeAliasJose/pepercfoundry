@@ -1,5 +1,4 @@
 import anime from 'animejs'
-import { getObjectCoordinates } from '../functions/positionSynchronizerFunctions'
 
 export function mostrarMenu () {
   anime({

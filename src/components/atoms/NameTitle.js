@@ -2,8 +2,10 @@ import anime from 'animejs'
 import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import GlobalAnimationStatusContext from '../../contexts/GlobalAnimationStatusContext'
+import ThemeContext from '../../contexts/ThemeContext'
 
 function NameTitle ({ style }) {
+  const { theme } = useContext(ThemeContext)
   const { logoTransparent } = useContext(GlobalAnimationStatusContext)
 
   useEffect(() => {
@@ -30,8 +32,8 @@ function NameTitle ({ style }) {
        transition-colors '
         style={{
           fontFamily: 'Lato black',
-          WebkitTextStroke: true ? '0.5px #909090' : '0px',
-          color: logoTransparent ? 'transparent' : '#101010'
+          WebkitTextStroke: true ? theme.nameTitleStroke : '0px',
+          color: logoTransparent ? 'transparent' : theme.nameTitleColor
         }}
       >
         <div className='it'>JOSÉ</div>

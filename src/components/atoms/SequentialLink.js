@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import ThemeContext from '../../contexts/ThemeContext'
 
 function SequentialLink ({ text, to, right }) {
+  const { theme } = useContext(ThemeContext)
   const [visible, setVisible] = useState(false)
   return (
     <Link
@@ -14,12 +16,10 @@ function SequentialLink ({ text, to, right }) {
       }}
       //Playfair Display SC // Bio Sans
       className='myOption z-10 w-fit h-fit leading-none
-  font-bold text-end flex self-end'
+  font-bold text-end flex self-end text-5xl sm:text-7xl md:text8-xl lg:text-9xl'
       style={{
-        color: visible ? '#101010' : '#FFFFFF',
+        color: visible ? theme.menuHighlightColor : theme.menuColor,
         fontFamily: 'Bio Sans',
-        fontSize: '10vw',
-        lineHeight: '9vw',
         transformOrigin: 'center right'
       }}
     >

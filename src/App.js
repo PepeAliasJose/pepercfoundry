@@ -10,17 +10,21 @@ import GlobalAnimationStatusContext from './contexts/GlobalAnimationStatusContex
 import NameTitle from './components/atoms/NameTitle'
 import Footer from './components/molecules/Footer'
 import Experience from './pages/Experience'
+import Studies from './pages/Studies'
+import Projects from './pages/Projects'
+import Contact from './pages/Contact'
+import Hobbies from './pages/Hobbies'
 
 function App () {
   const { theme } = useContext(ThemeContext)
 
   useEffect(() => {
     document.body.style.backgroundColor = theme.bgColor
-  }, [])
+  }, [theme])
 
   return (
     <div
-      className='App'
+      className='App transition-colors duration-500 ease-in-out'
       style={{
         backgroundColor: theme.bgColor
       }}
@@ -52,6 +56,10 @@ function Body () {
           <Route path='/' element={<LandingMotion />} />
           <Route path='/about' element={<AboutMotion />} />
           <Route path='/experience' element={<ExperienceMotion />} />
+          <Route path='/studies' element={<Studies />} />
+          <Route path='/projects' element={<Projects />} />
+          <Route path='/hobbies' element={<Hobbies />} />
+          <Route path='/contact' element={<Contact />} />
         </Routes>
       </AnimatePresence>
       {menuGeneralAnimation && <MenuContainer key='menu' />}

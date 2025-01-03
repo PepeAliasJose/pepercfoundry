@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react'
 import anime from 'animejs'
 import ThemeContext from '../../contexts/ThemeContext'
+import ThemeSwitch from '../organisms/ThemeSwitch'
 
 function Footer () {
   const { theme } = useContext(ThemeContext)
@@ -23,7 +24,8 @@ function Footer () {
   return (
     <div
       style={{
-        fontFamily: 'Lato'
+        fontFamily: 'Lato',
+        color: theme.fontColor
       }}
       className='myFooter sm:w-full sm:h-5 flex justify-start 
       items-center gap-10 fixed top-0 p-10 mx-0
@@ -34,7 +36,9 @@ function Footer () {
       <div className='el opacity-0'>781peperc@gmail.com</div>
 
       <div className='ml-auto flex gap-8'>
-        <div className='el opacity-0'>COLOR</div>
+        <div className='el opacity-0'>
+          <ThemeSwitch />
+        </div>
         <div className='el opacity-0'>IDIOMA</div>
       </div>
     </div>

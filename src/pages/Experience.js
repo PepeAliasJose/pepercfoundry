@@ -13,10 +13,10 @@ function Experience () {
         className='w-screen h-fit mt-20 px-5 sm:px-10
        pt-52 pb-40'
       >
-        <div className='w-1/2 mx-auto'>
+        <div className='max-w-xl md:max-w-3xl mx-auto'>
           <StyledText
             title='Desarrollador Full-Stack'
-            position={1}
+            highlight={[1]}
             company={'Aktios S.L'}
             date={'2023'}
             content={

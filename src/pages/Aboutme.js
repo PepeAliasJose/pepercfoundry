@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import ThemeContext from '../contexts/ThemeContext'
-import Quote from '../components/atoms/Quote'
 import { useScroll } from 'framer-motion'
 import { useMotionValueEvent } from 'framer-motion'
 import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
@@ -33,6 +32,7 @@ function Aboutme () {
   })
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     setLogoTransparent(false)
 
     //Hacer aparecer la foto girando
@@ -74,7 +74,7 @@ function Aboutme () {
         </div>
       </div>
       <div className='w-screen min-h-fit px-10 pb-20'>
-        <div className='w-full flex flex-col md:flex-row mt-20 gap-20 mx-0  md:px-20 lg:px-44'>
+        <div className='w-full flex flex-col md:flex-row mt-20 gap-20 mx-0  md:px-20 xl:px-44'>
           <MediumStyleText
             title={'Desarrollo web y multiplataforma'}
             content={
@@ -98,7 +98,7 @@ function Aboutme () {
             }
           />
         </div>
-        <div className='w-full flex flex-col md:flex-row mt-20 gap-20 mx-0  md:px-20 lg:px-44'>
+        <div className='w-full flex flex-col md:flex-row mt-20 gap-20 mx-0  md:px-20 xl:px-44'>
           <MediumStyleText
             highlight={
               'Delivering highly executed front-end user experiences by paying close ' +

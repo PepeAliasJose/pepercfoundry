@@ -20,32 +20,32 @@ function Menu () {
       <RadialMenuOption
         text={'SOBRE MÍ'}
         subtitle={'Lo que quieras saber sobre mí'}
-        to={'about'}
+        to={'/about'}
       />
       <RadialMenuOption
         text={'EXPERIENCIA'}
         subtitle={'Mi experiencia profesional'}
-        to={'experience'}
+        to={'/experience'}
       />
       <RadialMenuOption
         text={'ESTUDIOS'}
         subtitle={'Todo lo que he aprendido'}
-        to={'studies'}
+        to={'/studies'}
       />
       <RadialMenuOption
         text={'PROYECTOS'}
         subtitle={'Mis proyectos más interesantes'}
-        to={'proyects'}
+        to={'/projects'}
       />
       <RadialMenuOption
         text={'AFICIONES'}
         subtitle={'Un poco más sobre mí'}
-        to={'hobbies'}
+        to={'/hobbies'}
       />
       <RadialMenuOption
         text={'CONTACTAME'}
         subtitle={'Te estoy esperando'}
-        to={'contact'}
+        to={'/contact'}
       />
     </div>
   )

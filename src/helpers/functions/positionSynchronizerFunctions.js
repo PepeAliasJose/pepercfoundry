@@ -41,3 +41,52 @@ export function getObjectCoordinates (id, scroll) {
   const x = e?.left - bodyRect.left
   return { x, y }
 }
+
+//FUNCIONES PARA EL CALCULO DE CONTRASTE Y EL CAMBIO DE TEMA
+
+const RED = 0.2126
+const GREEN = 0.7152
+const BLUE = 0.0722
+
+const GAMMA = 2.4
+
+export function luminance (r, g, b) {
+  var a = [r, g, b].map(v => {
+    v /= 255
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, GAMMA)
+  })
+  return a[0] * RED + a[1] * GREEN + a[2] * BLUE
+}
+
+export function contrast (rgb1, rgb2) {
+  var lum1 = luminance(...rgb1)
+  var lum2 = luminance(...rgb2)
+  var brightest = Math.max(lum1, lum2)
+  var darkest = Math.min(lum1, lum2)
+  return (brightest + 0.05) / (darkest + 0.05)
+}
+
+//Convertir de HSL a RGB para luego pasarlos a HEX
+export const HSLToRGB = (h, s, l) => {
+  s /= 100
+  l /= 100
+  const k = n => (n + h / 30) % 12
+  const a = s * Math.min(l, 1 - l)
+  const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
+  return [
+    Math.round(255 * f(0)),
+    Math.round(255 * f(8)),
+    Math.round(255 * f(4))
+  ]
+}
+
+//Pasar de RGB a HEX para comodidad al usarlo
+export const RGBtoHEX = (r, g, b) => {
+  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b)
+}
+
+//Convertir un numero a exadedecimal
+function componentToHex (c) {
+  var hex = c.toString(16)
+  return hex.length == 1 ? '0' + hex : hex
+}
