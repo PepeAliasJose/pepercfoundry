@@ -66,6 +66,29 @@ export function contrast (rgb1, rgb2) {
   return (brightest + 0.05) / (darkest + 0.05)
 }
 
+export function lightReducer (x) {
+  return (
+    1.619546 -
+    0.2854454 * x -
+    0.01577268 * x ** 2 +
+    0.0002438628 * x ** 3 -
+    0.00000120554 * x ** 4 +
+    2.012484 * 10 ** -9 * x ** 5
+  )
+}
+
+export function fixContrast (contrast, c2, hard, h) {
+  if (contrast < 4.5 && hard) {
+    c2[2] = c2[2] - (4.5 - contrast) * 6
+  }
+
+  if (hard) {
+    console.log(lightReducer(h))
+  }
+
+  return c2
+}
+
 //Convertir de HSL a RGB para luego pasarlos a HEX
 export const HSLToRGB = (h, s, l) => {
   s /= 100
@@ -88,5 +111,5 @@ export const RGBtoHEX = (r, g, b) => {
 //Convertir un numero a exadedecimal
 function componentToHex (c) {
   var hex = c.toString(16)
-  return hex.length == 1 ? '0' + hex : hex
+  return hex.length === 1 ? '0' + hex : hex
 }

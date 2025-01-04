@@ -1,7 +1,10 @@
 'use client'
 import { createContext, useState } from 'react'
 import {
+  contrast,
+  fixContrast,
   HSLToRGB,
+  lightReducer,
   RGBtoHEX
 } from '../helpers/functions/positionSynchronizerFunctions'
 
@@ -53,18 +56,31 @@ export function ThemeProvider ({ children }) {
     //Se usa el color en HSL por que es mas facil modificarle la saturacion y la luminosidad,
     //Luego los convetirmos en RGB para comprobar el contraste, y por ultimo HEX para inyectarlo al
     //HTML
+    var bg = [parseInt(h), 55.6, 97.8]
+
+    var ft = [parseInt(h), 17.2, 44.1]
+    var hl = [parseInt(h), 93.2, 71]
+
+    var sh = [parseInt(h), 3.3, 11]
+    var me = [parseInt(h), 36.6, 61.2]
+
+    //36-186
+    const dangerZone = h >= 25 && h <= 200
+
+    ft = fixContrast(contrast(HSLToRGB(...bg), HSLToRGB(...ft)), ft)
+    hl[2] = dangerZone ? hl[2] + lightReducer(h) : hl[2]
 
     var custom = {
-      bgColor: RGBtoHEX(...HSLToRGB(parseInt(h), 20, 90)),
-      fontColor: RGBtoHEX(...HSLToRGB(parseInt(h), 45, 45)),
-      softHighlightColor: RGBtoHEX(...HSLToRGB(parseInt(h), 80, 25)),
-      highlightColor: RGBtoHEX(...HSLToRGB(parseInt(h), 90, 20)),
-      menuColor: RGBtoHEX(...HSLToRGB(parseInt(h), 70, 35)),
+      bgColor: RGBtoHEX(...HSLToRGB(...bg)),
+      fontColor: RGBtoHEX(...HSLToRGB(...ft)),
+      softHighlightColor: RGBtoHEX(...HSLToRGB(...sh)),
+      highlightColor: RGBtoHEX(...HSLToRGB(...hl)),
+      menuColor: RGBtoHEX(...HSLToRGB(...me)),
       menuHighlightColor: RGBtoHEX(...HSLToRGB(parseInt(h), 70, 20)),
       subMenuBgColor: '#101010',
       subMenuTextColor: '#FFFFFF',
-      nameTitleColor: RGBtoHEX(...HSLToRGB(parseInt(h), 70, 30)),
-      nameTitleStroke: '0.5px ' + RGBtoHEX(...HSLToRGB(parseInt(h), 50, 20))
+      nameTitleColor: RGBtoHEX(...HSLToRGB(...me)),
+      nameTitleStroke: '0.5px ' + RGBtoHEX(...HSLToRGB(...me))
     }
     setTheme(custom)
   }

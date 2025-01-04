@@ -6,11 +6,14 @@ function Title ({ title, size, highlight }) {
 
   const t = title.split(' ')
   const editTitle = t.map((x, i) => {
+    const color = highlight?.includes(i)
+      ? theme.highlightColor
+      : theme.fontColor
     return (
       <div
         key={i}
         style={{
-          color: highlight?.includes(i) ? theme.highlightColor : theme.fontColor
+          color: color
         }}
       >
         {x}
@@ -19,8 +22,9 @@ function Title ({ title, size, highlight }) {
   })
   return (
     <div
+      style={{ fontFamily: 'Bio Sans' }}
       className={
-        'flex flex-row gap-2 flex-wrap text-3xl font-bold ' +
+        'flex flex-row gap-2 flex-wrap text-3xl font-black ' +
         (size ? size : 'md:text-5xl')
       }
     >

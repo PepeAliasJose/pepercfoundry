@@ -1,11 +1,6 @@
-import { useContext, useEffect } from 'react'
-import ThemeContext from '../contexts/ThemeContext'
 import Quote from '../components/atoms/Quote'
-import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
 
 function Landing () {
-  const { theme } = useContext(ThemeContext)
-
   return (
     <div className='w-full h-screen flex opacity-1 p-10 '>
       <div className='flex self-center -mt-20'>
