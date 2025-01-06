@@ -7,7 +7,7 @@ function HighlightText ({ highlight }) {
     <div className='flex'>
       <div
         className='font-semibold text-2xl text-left'
-        style={{ fontFamily: 'Lato bold', color: theme.fontColor }}
+        style={{ fontFamily: 'Lato bold', color: theme.softHighlightColor }}
       >
         {highlight}
       </div>

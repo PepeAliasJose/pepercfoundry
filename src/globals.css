@@ -8,16 +8,36 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
   text-rendering: optimizeLegibility;
+  font-weight: 500;
+}
+
+.barraColor::-moz-range-thumb {
+  background-color: hsl(var(--c) 100 50);
+  border: solid 2px var(--b);
+  width: 5px;
+}
+
+.specialTitle {
+  background: -webkit-linear-gradient(
+    0deg,
+    #00a3cc -2.17%,
+    #5f5fd3 33%,
+    #7f2aff 66%,
+    #ff3200 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f100;
+  background: transparent;
 }
 
 /* Handle */

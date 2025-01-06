@@ -13,9 +13,9 @@ function Quote () {
       md:mx-0
       sm:text-4xl z-50'
       style={{
-        color: theme.fontColor,
+        color: theme.softHighlightColor,
         fontFamily: 'Lato black',
-        WebkitTextStroke: '1px' + theme.fontColor
+        WebkitTextStroke: '1px' + theme.softHighlightColor
       }}
     >
       <div className='inline-flex gap-2'>

@@ -3,15 +3,17 @@ import SequentialLink from '../components/atoms/SequentialLink'
 import Title from '../components/atoms/Title'
 import MediumStyleText from '../components/molecules/MediumStyleText'
 import StyledText from '../components/molecules/StyledText'
+import PageBottomContainer from '../components/atoms/PageBottomContainer'
+import PageContentContainer from '../components/atoms/PageContentContainer'
 
 function Studies () {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
   return (
-    <div className='w-full h-full'>
-      <div className='px-5 pt-5 md:px-10 md:pt-10'>
-        <div className='mt-20 max-w-3xl mx-auto flex flex-col gap-8'>
+    <div className='flex flex-col'>
+      <PageContentContainer>
+        <div className='mt-20 sm:mt-0 max-w-3xl mx-auto flex flex-col gap-8'>
           <Title title={'Aprende. Investiga. Mejora'} />
           <MediumStyleText
             content={
@@ -62,21 +64,24 @@ function Studies () {
             }
           />
         </div>
-      </div>
-      <div className='w-screen h-screen px-10'>
-        <div className='w-full'>
-          <div className='w-fit pt-60 text-xl font-bold'>
-            <div className='text-left ml-2'>A que esperas:</div>
-            <SequentialLink text={'CONTACTAME'} to={'/contact'} />
-          </div>
-          <div className='w-fit ml-auto mt-20'>
-            <div className='text-right mr-2 text-xl font-bold'>
-              O siguiente apartado:
-            </div>
-            <SequentialLink text={'PROYECTOS'} to={'/projects'} />
-          </div>
+      </PageContentContainer>
+      <PageBottomContainer>
+        <div className='w-fit text-xl font-bold'>
+          <SequentialLink
+            text={'CONTACTAME'}
+            to={'/contact'}
+            topText={'A que esperas:'}
+          />
         </div>
-      </div>
+        <div className='w-fit ml-auto mt-20'>
+          <SequentialLink
+            text={'PROYECTOS'}
+            to={'/projects'}
+            topText={'O siguiente apartado'}
+            right={true}
+          />
+        </div>
+      </PageBottomContainer>
     </div>
   )
 }

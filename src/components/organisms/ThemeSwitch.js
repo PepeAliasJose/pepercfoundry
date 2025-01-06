@@ -10,34 +10,48 @@ function ThemeSwitch () {
     white,
     black,
     base,
-    setColorPicker
+    setColorPicker,
+    custom,
+    setCustom
   } = useContext(ThemeContext)
 
   const [show, setShow] = useState(false)
-  const [contrast, setContrast] = useState(false)
-  const [colorPick, setColorPick] = useState(0)
+  const [colorValue, setColorValue] = useState(205)
 
   useEffect(() => {
-    setColorPicker(colorPick)
-  }, [colorPick])
+    if (custom) {
+      setColorValue(colorValue)
+      setColorPicker(colorValue)
+    } else {
+      setThemeToBase()
+    }
+  }, [custom])
+
+  useEffect(() => {
+    setColorPicker(colorValue)
+  }, [colorValue])
 
   return (
-    <div className='flex flex-row gap-2'>
-      Tema:
+    <div className='flex flex-row gap-2 cursor-pointer'>
       <div
-        style={{
-          backgroundColor: theme.bgColor,
-          borderColor: theme.fontColor
+        className='flex flex-row gap-2 cursor-pointer'
+        onClick={() => {
+          setShow(!show)
         }}
-        className='h-6 w-6 border-2 border-solid rounded-full p-1'
       >
+        Tema:
         <div
-          onClick={() => {
-            setShow(!show)
+          style={{
+            backgroundColor: theme.bgColor,
+            borderColor: theme.fontColor
           }}
-          style={{ backgroundColor: theme.highlightColor }}
-          className='w-full h-full rounded-full cursor-pointer'
-        />
+          className='h-6 w-6 border-2 border-solid rounded-full p-1'
+        >
+          <div
+            style={{ backgroundColor: theme.highlightColor }}
+            className='w-full h-full rounded-full '
+          />
+        </div>
       </div>
       {show && (
         <div
@@ -89,18 +103,13 @@ function ThemeSwitch () {
               </div>
             </div>
             <div>
-              <Toggle active={contrast} setActive={setContrast} />
+              <Toggle active={custom} setActive={setCustom} />
             </div>
-            <div>
-              <div className='flex flex-row gap-3'>
-                Color personalizado:
-                <div
-                  style={{ backgroundColor: 'hsl(' + colorPick + ' 100 50)' }}
-                  className='h-6 w-6 rounded-full'
-                />
+            {custom && (
+              <div>
+                <Color value={colorValue} picker={setColorValue} />
               </div>
-              <Color value={colorPick} picker={setColorPick} />
-            </div>
+            )}
           </div>
         </div>
       )}
@@ -109,6 +118,7 @@ function ThemeSwitch () {
 }
 
 function Color ({ value, picker }) {
+  const { theme } = useContext(ThemeContext)
   return (
     <input
       onChange={e => {
@@ -120,24 +130,27 @@ function Color ({ value, picker }) {
       min={0}
       max={360}
       style={{
+        '--c': value,
+        '--b': theme.menuColor,
         background:
           'linear-gradient(to right, red 0%, #ff0 17%, lime 33%, cyan 50%, blue 66%, #f0f 83%, red 100%)'
       }}
-      className='w-full h-3 bg-gray-200 rounded-lg 
-      appearance-none cursor-pointer'
+      className='barraColor w-full h-3 bg-gray-200 rounded-lg 
+      appearance-none cursor-pointer thumb'
     ></input>
   )
 }
 
 function Toggle ({ active, setActive }) {
+  const { theme } = useContext(ThemeContext)
   return (
     <div className='flex flex-row gap-2'>
-      Alto contraste:
+      Color personalizado:
       <div
         onClick={() => {
           setActive(!active)
         }}
-        style={{ backgroundColor: active ? '#202020' : '#AAAAAA' }}
+        style={{ backgroundColor: active ? theme.highlightColor : '#AAAAAA' }}
         className='w-11 h-6 rounded-full p-[1px] cursor-pointer border-[1px] border-solid border-white'
       >
         <div

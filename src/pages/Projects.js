@@ -2,15 +2,17 @@ import { useEffect } from 'react'
 import SequentialLink from '../components/atoms/SequentialLink'
 import Title from '../components/atoms/Title'
 import ProjectCard from '../components/organisms/ProjectCard'
+import PageBottomContainer from '../components/atoms/PageBottomContainer'
+import PageContentContainer from '../components/atoms/PageContentContainer'
 
 function Projects () {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
   return (
-    <div className='w-full h-full'>
-      <div className='px-5 pt-5 md:px-10 md:pt-10'>
-        <div className='mt-20 max-w-4xl mx-auto flex flex-col gap-20'>
+    <div className='flex flex-col'>
+      <PageContentContainer>
+        <div className='max-w-4xl mx-auto flex flex-col gap-20 -mt-10'>
           <Title title={'Crea y analiza'} />
           <ProjectCard
             title='DRAGONBALLDLE'
@@ -40,21 +42,24 @@ function Projects () {
             links='Link Link Link'
           />
         </div>
-      </div>
-      <div className='w-screen h-screen px-10'>
-        <div className='w-full'>
-          <div className='w-fit pt-60 text-xl font-bold'>
-            <div className='text-left ml-2'>A que esperas:</div>
-            <SequentialLink text={'CONTACTAME'} to={'/contact'} />
-          </div>
-          <div className='w-fit ml-auto mt-20'>
-            <div className='text-right mr-2 text-xl font-bold'>
-              O siguiente apartado:
-            </div>
-            <SequentialLink text={'AFICIONES'} to={'/hobbies'} />
-          </div>
+      </PageContentContainer>
+      <PageBottomContainer>
+        <div className='w-fit text-xl font-bold'>
+          <SequentialLink
+            text={'CONTACTAME'}
+            to={'/contact'}
+            topText={'A que esperas:'}
+          />
         </div>
-      </div>
+        <div className='w-fit ml-auto mt-20'>
+          <SequentialLink
+            text={'AFICIONES'}
+            to={'/hobbies'}
+            topText={'O siguiente apartado'}
+            right={true}
+          />
+        </div>
+      </PageBottomContainer>
     </div>
   )
 }

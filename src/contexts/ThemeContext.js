@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import {
   contrast,
   fixContrast,
@@ -13,8 +13,8 @@ const ThemeContext = createContext()
 export function ThemeProvider ({ children }) {
   const base = {
     bgColor: '#c1cbcd',
-    fontColor: '#101010',
-    softHighlightColor: '',
+    fontColor: '#353535',
+    softHighlightColor: '#101010',
     highlightColor: '#3986AC',
     menuColor: '#FFFFFF',
     menuHighlightColor: '#101010',
@@ -26,8 +26,8 @@ export function ThemeProvider ({ children }) {
 
   const black = {
     bgColor: '#101010',
-    fontColor: '#FAFAFA',
-    softHighlightColor: '',
+    fontColor: '#D0D0D0',
+    softHighlightColor: '#FAFAFA',
     highlightColor: '#D41F48',
     menuColor: '#FFFFFF',
     menuHighlightColor: '#D41F48',
@@ -39,8 +39,8 @@ export function ThemeProvider ({ children }) {
 
   const white = {
     bgColor: '#FAFAFA',
-    fontColor: '#101010',
-    softHighlightColor: '',
+    fontColor: '#353535',
+    softHighlightColor: '#101010',
     highlightColor: '#3986AC',
     menuColor: '#101010',
     menuHighlightColor: '#3986AC',
@@ -50,7 +50,7 @@ export function ThemeProvider ({ children }) {
     nameTitleStroke: '0.5px #909090'
   }
   const [theme, setTheme] = useState(base)
-  const [customTheme, setCustomTheme] = useState(0)
+  const [custom, setCustom] = useState(false)
 
   const setColorPicker = h => {
     //Se usa el color en HSL por que es mas facil modificarle la saturacion y la luminosidad,
@@ -61,7 +61,7 @@ export function ThemeProvider ({ children }) {
     var ft = [parseInt(h), 17.2, 44.1]
     var hl = [parseInt(h), 93.2, 71]
 
-    var sh = [parseInt(h), 3.3, 11]
+    var sh = [parseInt(h), 3.3, 25]
     var me = [parseInt(h), 36.6, 61.2]
 
     //36-186
@@ -70,7 +70,7 @@ export function ThemeProvider ({ children }) {
     ft = fixContrast(contrast(HSLToRGB(...bg), HSLToRGB(...ft)), ft)
     hl[2] = dangerZone ? hl[2] + lightReducer(h) : hl[2]
 
-    var custom = {
+    var customT = {
       bgColor: RGBtoHEX(...HSLToRGB(...bg)),
       fontColor: RGBtoHEX(...HSLToRGB(...ft)),
       softHighlightColor: RGBtoHEX(...HSLToRGB(...sh)),
@@ -82,7 +82,9 @@ export function ThemeProvider ({ children }) {
       nameTitleColor: RGBtoHEX(...HSLToRGB(...me)),
       nameTitleStroke: '0.5px ' + RGBtoHEX(...HSLToRGB(...me))
     }
-    setTheme(custom)
+    if (custom) {
+      setTheme(customT)
+    }
   }
 
   function setThemeToBlack () {
@@ -111,7 +113,8 @@ export function ThemeProvider ({ children }) {
         black,
         white,
         setColorPicker,
-        customTheme
+        custom,
+        setCustom
       }}
     >
       {children}

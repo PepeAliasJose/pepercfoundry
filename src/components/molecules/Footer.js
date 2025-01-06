@@ -25,14 +25,14 @@ function Footer () {
     <div
       style={{
         fontFamily: 'Lato',
-        color: theme.fontColor
+        color: theme.softHighlightColor
       }}
       className='myFooter sm:w-full sm:h-5 flex justify-start 
       items-center gap-10 fixed top-0 p-10 mx-0
-      pointer-events-auto z-50'
+      pointer-events-auto font-semibold z-50'
     >
-      <div className='el opacity-0'>linkedin</div>
-      <div className='el opacity-0'>github</div>
+      <div className='el opacity-0'>Linkedin</div>
+      <div className='el opacity-0'>Github</div>
       <div className='el opacity-0'>781peperc@gmail.com</div>
 
       <div className='ml-auto flex gap-8'>

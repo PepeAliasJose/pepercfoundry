@@ -37,6 +37,9 @@ function App () {
 }
 
 function Body () {
+  const { moverOpcionSeleccionadaArriba } = useContext(
+    GlobalAnimationStatusContext
+  )
   const location = useLocation()
   const { menuGeneralAnimation, setMenuGeneralAnimation } = useContext(
     GlobalAnimationStatusContext
@@ -45,6 +48,9 @@ function Body () {
 
   useEffect(() => {
     location.pathname === '/' && setMenuGeneralAnimation(true)
+    location.pathname !== '/' &&
+      menuGeneralAnimation &&
+      moverOpcionSeleccionadaArriba()
   }, [location])
 
   return (
@@ -72,7 +78,7 @@ function LandingMotion ({ hasTransition }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.7, delay: 1.5 }}
+      transition={{ duration: 0.4, delay: 1.25 }}
       exit={{ opacity: 0, transition: { duration: 0.3, delay: 0 } }}
     >
       <Landing />
@@ -96,11 +102,11 @@ function AboutMotion ({ hasTransition }) {
 function ExperienceMotion ({ hasTransition }) {
   return (
     <motion.div
-      initial={{ opacity: 0, transform: 'translateY(70vh)' }}
+      initial={{ opacity: 0, transform: 'translateY(30vh)' }}
       animate={{
         opacity: 1,
         transform: 'translateY(0vh)',
-        transition: { delay: 0.3, duration: 1 }
+        transition: { delay: 0.3, duration: 0.6 }
       }}
       exit={{ opacity: 0, transform: 'translateY(-50vh)' }}
       transition={{ duration: 0.5 }}

@@ -7,7 +7,7 @@ export function mostrarMenu () {
     rotateY: {
       value: ['0deg', '-20deg']
     },
-    duration: 250,
+    duration: 100,
     easing: 'easeOutSine',
     delay: 0
   })
@@ -19,7 +19,7 @@ export function mostrarMenu () {
     translateY: {
       value: ['-220vh', '0vh']
     },
-    duration: 1200,
+    duration: 600,
     easing: 'easeOutSine',
     delay: anime.stagger(-50, { start: 600 })
   })

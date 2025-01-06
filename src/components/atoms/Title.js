@@ -8,7 +8,7 @@ function Title ({ title, size, highlight }) {
   const editTitle = t.map((x, i) => {
     const color = highlight?.includes(i)
       ? theme.highlightColor
-      : theme.fontColor
+      : theme.softHighlightColor
     return (
       <div
         key={i}
