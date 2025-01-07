@@ -1,7 +1,8 @@
 import { useContext } from 'react'
-import ReadyForWork from './ReadyForWork'
 import GlobalAnimationStatusContext from '../../contexts/GlobalAnimationStatusContext'
 import ThemeContext from '../../contexts/ThemeContext'
+import ReadyForWork from '../molecules/ReadyForWork'
+
 function Quote () {
   const { readyForWork } = useContext(GlobalAnimationStatusContext)
   const { theme } = useContext(ThemeContext)
@@ -35,7 +36,13 @@ function Quote () {
       <p style={{ WebkitTextStroke: '0px black' }} className='text-sm'>
         WEB / MULTIPLATAFORMA / FULL-STACK
       </p>
-      {readyForWork && <ReadyForWork />}
+      {readyForWork && (
+        <ReadyForWork
+          bg={theme.rfwBg}
+          text={theme.rfwText}
+          secondary={theme.rfwSec}
+        />
+      )}
     </div>
   )
 }

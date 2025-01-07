@@ -32,7 +32,7 @@ function NameTitle ({ style }) {
        transition-colors '
         style={{
           fontFamily: 'Lato black',
-          WebkitTextStroke: true ? theme.nameTitleStroke : '0px',
+          WebkitTextStroke: logoTransparent ? theme.nameTitleStroke : '0px',
           color: logoTransparent ? 'transparent' : theme.nameTitleColor
         }}
       >

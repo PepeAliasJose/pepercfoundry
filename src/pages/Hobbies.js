@@ -6,11 +6,15 @@ import PageBottomContainer from '../components/atoms/PageBottomContainer'
 import SequentialLink from '../components/atoms/SequentialLink'
 import ThemeContext from '../contexts/ThemeContext'
 import anime from 'animejs'
+import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
 
 function Hobbies () {
   const { theme, setTheme, setThemeToBlack } = useContext(ThemeContext)
 
+  const { setNameTitleBreakpoint } = useContext(GlobalAnimationStatusContext)
+
   useEffect(() => {
+    setNameTitleBreakpoint(0.01)
     window.scrollTo(0, 0)
 
     var firstTheme = theme

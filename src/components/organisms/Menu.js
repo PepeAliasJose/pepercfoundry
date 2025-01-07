@@ -12,7 +12,7 @@ function Menu () {
     <div
       id='myMenu'
       style={{
-        transformOrigin: 'center right',
+        transformOrigin: 'right 45%',
         transform: 'perspective(2000px) rotateY(-20deg) translateZ(0)'
       }}
       className='myMenu pointer-events-auto flex flex-col items-end gap-4 pt-40 pb-80'

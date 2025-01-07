@@ -1,7 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import ThemeContext from '../contexts/ThemeContext'
-import { useScroll } from 'framer-motion'
-import { useMotionValueEvent } from 'framer-motion'
 import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
 import MediumStyleText from '../components/molecules/MediumStyleText'
 import SequentialLink from '../components/atoms/SequentialLink'
@@ -12,28 +10,11 @@ import PageContentContainer from '../components/atoms/PageContentContainer'
 
 function Aboutme () {
   const { theme } = useContext(ThemeContext)
-  const {
-    logoTransparent,
-    setLogoTransparent,
-    moverOpcionSeleccionadaArriba,
-    menuGeneralAnimation,
-    setMenuGeneralAnimation
-  } = useContext(GlobalAnimationStatusContext)
-
-  const { scrollYProgress } = useScroll()
-
-  useMotionValueEvent(scrollYProgress, 'change', latest => {
-    if (latest > 0.08 && !logoTransparent) {
-      setLogoTransparent(true)
-    } else if (latest < 0.08 && logoTransparent) {
-      setLogoTransparent(false)
-    }
-    if (latest >= 1) {
-      setLogoTransparent(false)
-    }
-  })
+  const { logoTransparent, setLogoTransparent, setNameTitleBreakpoint } =
+    useContext(GlobalAnimationStatusContext)
 
   useEffect(() => {
+    setNameTitleBreakpoint(0.08)
     window.scrollTo(0, 0)
     setLogoTransparent(false)
 

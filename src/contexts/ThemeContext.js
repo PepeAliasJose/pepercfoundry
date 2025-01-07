@@ -12,7 +12,7 @@ const ThemeContext = createContext()
 
 export function ThemeProvider ({ children }) {
   const base = {
-    bgColor: '#c1cbcd',
+    bgColor: '#B6CDD8',
     fontColor: '#353535',
     softHighlightColor: '#101010',
     highlightColor: '#3986AC',
@@ -21,20 +21,26 @@ export function ThemeProvider ({ children }) {
     subMenuBgColor: '#101010',
     subMenuTextColor: '#FFFFFF',
     nameTitleColor: '#101010',
-    nameTitleStroke: '0.5px #909090'
+    nameTitleStroke: '0.5px #909090',
+    rfwBg: '#3986AC',
+    rfwText: '#FAFAFA',
+    rfwSec: '#4578DC'
   }
 
   const black = {
     bgColor: '#101010',
-    fontColor: '#D0D0D0',
+    fontColor: '#FAFAFA',
     softHighlightColor: '#FAFAFA',
-    highlightColor: '#D41F48',
-    menuColor: '#FFFFFF',
-    menuHighlightColor: '#D41F48',
+    highlightColor: '#5754A8',
+    menuColor: '#FAFAFA',
+    menuHighlightColor: '#5754A8',
     subMenuBgColor: '#404040',
     subMenuTextColor: '#FFFFFF',
-    nameTitleColor: '#FAFAFA',
-    nameTitleStroke: '0.5px #AAAAAA'
+    nameTitleColor: '#D0D0D0',
+    nameTitleStroke: '0.5px #AAAAAA',
+    rfwBg: '#5754A8',
+    rfwText: '#FAFAFA',
+    rfwSec: '#D0D0D0'
   }
 
   const white = {
@@ -47,7 +53,10 @@ export function ThemeProvider ({ children }) {
     subMenuBgColor: '#101010',
     subMenuTextColor: '#FFFFFF',
     nameTitleColor: '#101010',
-    nameTitleStroke: '0.5px #909090'
+    nameTitleStroke: '0.5px #909090',
+    rfwBg: '#3986AC',
+    rfwText: '#FAFAFA',
+    rfwSec: '#101010'
   }
   const [theme, setTheme] = useState(base)
   const [custom, setCustom] = useState(false)
@@ -80,7 +89,10 @@ export function ThemeProvider ({ children }) {
       subMenuBgColor: '#101010',
       subMenuTextColor: '#FFFFFF',
       nameTitleColor: RGBtoHEX(...HSLToRGB(...me)),
-      nameTitleStroke: '0.5px ' + RGBtoHEX(...HSLToRGB(...me))
+      nameTitleStroke: '0.5px ' + RGBtoHEX(...HSLToRGB(...me)),
+      rfwBg: RGBtoHEX(...HSLToRGB(...me)),
+      rfwText: '#FAFAFA',
+      rfwSec: RGBtoHEX(...HSLToRGB(...hl))
     }
     if (custom) {
       setTheme(customT)

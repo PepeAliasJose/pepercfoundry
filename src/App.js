@@ -15,8 +15,27 @@ import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import Hobbies from './pages/Hobbies'
 
+import { useScroll } from 'framer-motion'
+import { useMotionValueEvent } from 'framer-motion'
+
 function App () {
   const { theme } = useContext(ThemeContext)
+
+  const { logoTransparent, setLogoTransparent, nameTitleBreakpoint } =
+    useContext(GlobalAnimationStatusContext)
+
+  const { scrollYProgress } = useScroll()
+
+  useMotionValueEvent(scrollYProgress, 'change', latest => {
+    if (latest >= nameTitleBreakpoint && !logoTransparent) {
+      setLogoTransparent(true)
+    } else if (latest <= nameTitleBreakpoint && logoTransparent) {
+      setLogoTransparent(false)
+    }
+    if (latest >= 1) {
+      setLogoTransparent(false)
+    }
+  })
 
   useEffect(() => {
     document.body.style.backgroundColor = theme.bgColor

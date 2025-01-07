@@ -1,11 +1,15 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import SequentialLink from '../components/atoms/SequentialLink'
 import StyledText from '../components/molecules/StyledText'
 import PageBottomContainer from '../components/atoms/PageBottomContainer'
 import PageContentContainer from '../components/atoms/PageContentContainer'
+import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
 
 function Experience () {
+  const { setNameTitleBreakpoint } = useContext(GlobalAnimationStatusContext)
+
   useEffect(() => {
+    setNameTitleBreakpoint(0.01)
     window.scrollTo(0, 0)
   }, [])
 

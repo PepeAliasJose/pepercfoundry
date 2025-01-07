@@ -18,6 +18,7 @@ export function GlobalAnimationStatusProvider ({ children }) {
   const [menuGeneralAnimation, setMenuGeneralAnimation] = useState(false)
   const [logoTransparent, setLogoTransparent] = useState(false)
   const [readyForWork, setReadyForWork] = useState(true)
+  const [nameTitleBreakpoint, setNameTitleBreakpoint] = useState(0)
 
   function moverOpcionSeleccionadaArriba () {
     const x = getMenuItems()
@@ -37,7 +38,9 @@ export function GlobalAnimationStatusProvider ({ children }) {
     logoTransparent,
     setLogoTransparent,
     readyForWork,
-    setReadyForWork
+    setReadyForWork,
+    nameTitleBreakpoint,
+    setNameTitleBreakpoint
   }
 
   return (
