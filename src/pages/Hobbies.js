@@ -9,16 +9,12 @@ import anime from 'animejs'
 import GlobalAnimationStatusContext from '../contexts/GlobalAnimationStatusContext'
 
 function Hobbies () {
-  const { theme, setTheme, setThemeToBlack } = useContext(ThemeContext)
-
+  const { theme, setTheme } = useContext(ThemeContext)
   const { setNameTitleBreakpoint } = useContext(GlobalAnimationStatusContext)
 
   useEffect(() => {
-    setNameTitleBreakpoint(0.01)
+    setNameTitleBreakpoint(0)
     window.scrollTo(0, 0)
-
-    var firstTheme = theme
-    setThemeToBlack()
 
     //Animacion intro de fotos??
     anime({
@@ -27,12 +23,12 @@ function Hobbies () {
         value: ['0%', '100%']
       },
       duration: 1200,
-      delay: 300,
+      delay: 800,
       easing: 'easeInOutSine'
     })
 
     return () => {
-      setTheme(firstTheme)
+      window.scrollTo(0, 0)
     }
   }, [])
   return (

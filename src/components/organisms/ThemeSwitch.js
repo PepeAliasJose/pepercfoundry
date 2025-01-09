@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import ThemeContext from '../../contexts/ThemeContext'
+import { getLocalTheme } from '../../helpers/theme/themes'
 
 function ThemeSwitch () {
   const { theme, setThemeStatus, black, base, custom, setCustom } =
@@ -7,14 +8,15 @@ function ThemeSwitch () {
 
   const [show, setShow] = useState(false)
   const [colorValue, setColorValue] = useState(theme.hue ? theme.hue : 205)
+  const [prevTheme, setPrevTheme] = useState(getLocalTheme())
 
   useEffect(() => {
     if (custom) {
       setColorValue(colorValue)
       setThemeStatus(colorValue)
     } else {
-      const theme = localStorage.getItem('PepeRCFoundryTheme')
-      const base = theme === 'claro' || theme === 'oscuro' ? theme : 'claro'
+      const base =
+        prevTheme === 'claro' || prevTheme === 'oscuro' ? prevTheme : 'claro'
       setThemeStatus(base)
     }
   }, [custom, colorValue])
@@ -59,6 +61,7 @@ function ThemeSwitch () {
               <div
                 onClick={() => {
                   setThemeStatus('claro')
+                  setPrevTheme('claro')
                 }}
                 className='flex flex-row gap-2 cursor-pointer'
               >
@@ -72,6 +75,7 @@ function ThemeSwitch () {
               <div
                 onClick={() => {
                   setThemeStatus('oscuro')
+                  setPrevTheme('oscuro')
                 }}
                 className='flex flex-row gap-2 cursor-pointer'
               >

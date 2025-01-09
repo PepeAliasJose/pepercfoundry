@@ -136,8 +136,12 @@ export const setColorPicker = h => {
   return customT
 }
 
+export function getLocalTheme () {
+  return localStorage.getItem('PepeRCFoundryTheme')
+}
+
 export function getPreloadTheme () {
-  const loadedTheme = localStorage.getItem('PepeRCFoundryTheme')
+  const loadedTheme = getLocalTheme()
 
   const themeS = loadedTheme ? loadedTheme : 'claro'
 

@@ -25,6 +25,8 @@ function App () {
     useContext(GlobalAnimationStatusContext)
 
   const { scrollYProgress } = useScroll()
+  //Desabilitar la restauración de scroll automatica
+  window.history.scrollRestoration = 'manual'
 
   useMotionValueEvent(scrollYProgress, 'change', latest => {
     if (latest >= nameTitleBreakpoint && !logoTransparent) {
@@ -35,6 +37,7 @@ function App () {
     if (latest >= 1) {
       setLogoTransparent(false)
     }
+    //console.log('Scroll: ', latest)
   })
 
   useEffect(() => {
@@ -81,10 +84,10 @@ function Body () {
           <Route path='/' element={<LandingMotion />} />
           <Route path='/about' element={<AboutMotion />} />
           <Route path='/experience' element={<ExperienceMotion />} />
-          <Route path='/studies' element={<Studies />} />
-          <Route path='/projects' element={<Projects />} />
-          <Route path='/hobbies' element={<Hobbies />} />
-          <Route path='/contact' element={<Contact />} />
+          <Route path='/studies' element={<StudiesMotion />} />
+          <Route path='/projects' element={<ProjectsMotion />} />
+          <Route path='/hobbies' element={<HobbiesMotion />} />
+          <Route path='/contact' element={<ContactMotion />} />
         </Routes>
       </AnimatePresence>
       {menuGeneralAnimation && <MenuContainer key='menu' />}
@@ -110,7 +113,7 @@ function AboutMotion ({ hasTransition }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.65 } }}
-      exit={{ opacity: 0 }}
+      exit={{ opacity: 0, transition: { duration: 0.3, delay: 0 } }}
       transition={{ duration: 0.5 }}
     >
       <Aboutme />
@@ -127,7 +130,11 @@ function ExperienceMotion ({ hasTransition }) {
         transform: 'translateY(0vh)',
         transition: { delay: 0.3, duration: 0.6 }
       }}
-      exit={{ opacity: 0, transform: 'translateY(-50vh)' }}
+      exit={{
+        opacity: 0,
+        transform: 'translateY(-50vh)',
+        transition: { duration: 0.3, delay: 0 }
+      }}
       transition={{ duration: 0.5 }}
     >
       <Experience />
@@ -135,4 +142,55 @@ function ExperienceMotion ({ hasTransition }) {
   )
 }
 
+function StudiesMotion ({ hasTransition }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      exit={{ opacity: 0, transition: { duration: 0.3 } }}
+    >
+      <Studies />
+    </motion.div>
+  )
+}
+
+function ProjectsMotion ({ hasTransition }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      exit={{ opacity: 0, transition: { duration: 0.3 } }}
+    >
+      <Projects />
+    </motion.div>
+  )
+}
+
+function HobbiesMotion ({ hasTransition }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.65, delay: 0.1 }}
+      exit={{ opacity: 0, transition: { duration: 0.3, delay: 0 } }}
+    >
+      <Hobbies />
+    </motion.div>
+  )
+}
+
+function ContactMotion ({ hasTransition }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.65, delay: 0.1 }}
+      exit={{ opacity: 0, transition: { duration: 0.3, delay: 0 } }}
+    >
+      <Contact />
+    </motion.div>
+  )
+}
 export default App
