@@ -141,8 +141,10 @@ export function getPreloadTheme () {
 
   const themeS = loadedTheme ? loadedTheme : 'claro'
 
-  console.log(themeS)
+  return getThemeByCode(themeS)
+}
 
+export function getThemeByCode (themeS) {
   if (themeS === 'claro') {
     return { myTheme: base, isCustom: false }
   }

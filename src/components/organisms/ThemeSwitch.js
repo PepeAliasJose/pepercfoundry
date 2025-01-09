@@ -13,13 +13,11 @@ function ThemeSwitch () {
       setColorValue(colorValue)
       setThemeStatus(colorValue)
     } else {
-      setThemeStatus('claro')
+      const theme = localStorage.getItem('PepeRCFoundryTheme')
+      const base = theme === 'claro' || theme === 'oscuro' ? theme : 'claro'
+      setThemeStatus(base)
     }
-  }, [custom])
-
-  useEffect(() => {
-    setThemeStatus(colorValue)
-  }, [colorValue])
+  }, [custom, colorValue])
 
   return (
     <div className='flex flex-row gap-2 cursor-pointer'>

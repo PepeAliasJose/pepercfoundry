@@ -19,11 +19,13 @@ export function ThemeProvider ({ children }) {
   function setThemeStatus (themeS) {
     if (themeS === 'claro') {
       setTheme(base)
+      setCustom(false)
     }
     if (themeS === 'oscuro') {
       setTheme(black)
+      setCustom(false)
     }
-    if (custom) {
+    if (themeS !== 'claro' && themeS !== 'oscuro' && custom) {
       setTheme(setColorPicker(themeS))
     }
 
