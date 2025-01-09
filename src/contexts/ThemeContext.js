@@ -1,116 +1,34 @@
 'use client'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useState } from 'react'
 import {
-  contrast,
-  fixContrast,
-  HSLToRGB,
-  lightReducer,
-  RGBtoHEX
-} from '../helpers/functions/positionSynchronizerFunctions'
+  base,
+  black,
+  getPreloadTheme,
+  saveTheme,
+  setColorPicker
+} from '../helpers/theme/themes'
 
 const ThemeContext = createContext()
 
 export function ThemeProvider ({ children }) {
-  const base = {
-    bgColor: '#B6CDD8',
-    fontColor: '#353535',
-    softHighlightColor: '#101010',
-    highlightColor: '#3986AC',
-    menuColor: '#FFFFFF',
-    menuHighlightColor: '#101010',
-    subMenuBgColor: '#101010',
-    subMenuTextColor: '#FFFFFF',
-    nameTitleColor: '#101010',
-    nameTitleStroke: '0.5px #909090',
-    rfwBg: '#3986AC',
-    rfwText: '#FAFAFA',
-    rfwSec: '#4578DC'
-  }
+  const { myTheme, isCustom } = getPreloadTheme()
 
-  const black = {
-    bgColor: '#101010',
-    fontColor: '#FAFAFA',
-    softHighlightColor: '#FAFAFA',
-    highlightColor: '#5754A8',
-    menuColor: '#FAFAFA',
-    menuHighlightColor: '#5754A8',
-    subMenuBgColor: '#404040',
-    subMenuTextColor: '#FFFFFF',
-    nameTitleColor: '#D0D0D0',
-    nameTitleStroke: '0.5px #AAAAAA',
-    rfwBg: '#5754A8',
-    rfwText: '#FAFAFA',
-    rfwSec: '#D0D0D0'
-  }
+  const [theme, setTheme] = useState(myTheme)
+  const [custom, setCustom] = useState(isCustom)
 
-  const white = {
-    bgColor: '#FAFAFA',
-    fontColor: '#353535',
-    softHighlightColor: '#101010',
-    highlightColor: '#3986AC',
-    menuColor: '#101010',
-    menuHighlightColor: '#3986AC',
-    subMenuBgColor: '#101010',
-    subMenuTextColor: '#FFFFFF',
-    nameTitleColor: '#101010',
-    nameTitleStroke: '0.5px #909090',
-    rfwBg: '#3986AC',
-    rfwText: '#FAFAFA',
-    rfwSec: '#101010'
-  }
-  const [theme, setTheme] = useState(base)
-  const [custom, setCustom] = useState(false)
-
-  const setColorPicker = h => {
-    //Se usa el color en HSL por que es mas facil modificarle la saturacion y la luminosidad,
-    //Luego los convetirmos en RGB para comprobar el contraste, y por ultimo HEX para inyectarlo al
-    //HTML
-    var bg = [parseInt(h), 55.6, 97.8]
-
-    var ft = [parseInt(h), 17.2, 44.1]
-    var hl = [parseInt(h), 93.2, 71]
-
-    var sh = [parseInt(h), 3.3, 25]
-    var me = [parseInt(h), 36.6, 61.2]
-
-    //36-186
-    const dangerZone = h >= 25 && h <= 200
-
-    ft = fixContrast(contrast(HSLToRGB(...bg), HSLToRGB(...ft)), ft)
-    hl[2] = dangerZone ? hl[2] + lightReducer(h) : hl[2]
-
-    var customT = {
-      bgColor: RGBtoHEX(...HSLToRGB(...bg)),
-      fontColor: RGBtoHEX(...HSLToRGB(...ft)),
-      softHighlightColor: RGBtoHEX(...HSLToRGB(...sh)),
-      highlightColor: RGBtoHEX(...HSLToRGB(...hl)),
-      menuColor: RGBtoHEX(...HSLToRGB(...me)),
-      menuHighlightColor: RGBtoHEX(...HSLToRGB(parseInt(h), 70, 20)),
-      subMenuBgColor: '#101010',
-      subMenuTextColor: '#FFFFFF',
-      nameTitleColor: RGBtoHEX(...HSLToRGB(...me)),
-      nameTitleStroke: '0.5px ' + RGBtoHEX(...HSLToRGB(...me)),
-      rfwBg: RGBtoHEX(...HSLToRGB(...me)),
-      rfwText: '#FAFAFA',
-      rfwSec: RGBtoHEX(...HSLToRGB(...hl))
+  function setThemeStatus (themeS) {
+    if (themeS === 'claro') {
+      setTheme(base)
+    }
+    if (themeS === 'oscuro') {
+      setTheme(black)
     }
     if (custom) {
-      setTheme(customT)
+      setTheme(setColorPicker(themeS))
     }
-  }
 
-  function setThemeToBlack () {
-    //D41F48
-    setTheme(black)
-  }
-
-  function setThemeToWhite () {
-    //#3986AC
-    setTheme(white)
-  }
-
-  function setThemeToBase () {
-    setTheme(base)
+    //Guardar en el LocalStorage
+    saveTheme(themeS)
   }
 
   return (
@@ -118,13 +36,9 @@ export function ThemeProvider ({ children }) {
       value={{
         theme,
         setTheme,
-        setThemeToBase,
-        setThemeToBlack,
-        setThemeToWhite,
+        setThemeStatus,
         base,
         black,
-        white,
-        setColorPicker,
         custom,
         setCustom
       }}

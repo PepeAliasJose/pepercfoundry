@@ -29,7 +29,7 @@ function NameTitle ({ style }) {
        w-min flex flex-col ml-auto overflow-x-hidden overflow-y-hidden
        pointer-events-auto z-50 
        fixed left-10 bottom-10 
-       transition-colors '
+       transition-colors pt-1'
         style={{
           fontFamily: 'Lato black',
           WebkitTextStroke: logoTransparent ? theme.nameTitleStroke : '0px',

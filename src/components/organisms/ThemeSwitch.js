@@ -2,33 +2,23 @@ import { useContext, useEffect, useState } from 'react'
 import ThemeContext from '../../contexts/ThemeContext'
 
 function ThemeSwitch () {
-  const {
-    theme,
-    setThemeToBase,
-    setThemeToBlack,
-    setThemeToWhite,
-    white,
-    black,
-    base,
-    setColorPicker,
-    custom,
-    setCustom
-  } = useContext(ThemeContext)
+  const { theme, setThemeStatus, black, base, custom, setCustom } =
+    useContext(ThemeContext)
 
   const [show, setShow] = useState(false)
-  const [colorValue, setColorValue] = useState(205)
+  const [colorValue, setColorValue] = useState(theme.hue ? theme.hue : 205)
 
   useEffect(() => {
     if (custom) {
       setColorValue(colorValue)
-      setColorPicker(colorValue)
+      setThemeStatus(colorValue)
     } else {
-      setThemeToBase()
+      setThemeStatus('claro')
     }
   }, [custom])
 
   useEffect(() => {
-    setColorPicker(colorValue)
+    setThemeStatus(colorValue)
   }, [colorValue])
 
   return (
@@ -67,12 +57,14 @@ function ThemeSwitch () {
             }}
             className='flex flex-col p-4 border-2 border-solid w-full rounded-2xl gap-3'
           >
-            <div className='flex flex-row gap-4 mx-auto'>
+            <div className='flex flex-row gap-4 mr-auto'>
               <div
-                onClick={setThemeToBase}
+                onClick={() => {
+                  setThemeStatus('claro')
+                }}
                 className='flex flex-row gap-2 cursor-pointer'
               >
-                <div>Base</div>
+                <div>Claro</div>
                 <CircleColor
                   hl={base.bgColor}
                   bg={base.highlightColor}
@@ -80,18 +72,9 @@ function ThemeSwitch () {
                 />
               </div>
               <div
-                onClick={setThemeToWhite}
-                className='flex flex-row gap-2 cursor-pointer'
-              >
-                <div>Claro</div>
-                <CircleColor
-                  hl={white.bgColor}
-                  bg={white.highlightColor}
-                  br={theme.fontColor}
-                />
-              </div>
-              <div
-                onClick={setThemeToBlack}
+                onClick={() => {
+                  setThemeStatus('oscuro')
+                }}
                 className='flex flex-row gap-2 cursor-pointer'
               >
                 <div>Oscuro</div>
@@ -144,7 +127,7 @@ function Color ({ value, picker }) {
 function Toggle ({ active, setActive }) {
   const { theme } = useContext(ThemeContext)
   return (
-    <div className='flex flex-row gap-2'>
+    <div className='flex flex-row gap-2 text-nowrap'>
       Color personalizado:
       <div
         onClick={() => {

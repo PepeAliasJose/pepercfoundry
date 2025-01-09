@@ -7,6 +7,7 @@ import { photoAppear } from '../helpers/animations/landing-lg-animations'
 import HighlightText from '../components/atoms/HighlightText'
 import PageBottomContainer from '../components/atoms/PageBottomContainer'
 import PageContentContainer from '../components/atoms/PageContentContainer'
+import DownArrow from '../components/atoms/DownArrow'
 
 function Aboutme () {
   const { theme } = useContext(ThemeContext)
@@ -53,8 +54,8 @@ function Aboutme () {
               />
             </div>
           </div>
-          <div className='w-8 h-8 mt-32 mx-auto'>
-            <img src='./landingResources/back.svg' className='-rotate-90' />
+          <div className='w-8 h-8 mt-32 mx-auto -rotate-90'>
+            <DownArrow />
           </div>
         </div>
         <div className='w-full min-h-fit px-10 pb-20'>

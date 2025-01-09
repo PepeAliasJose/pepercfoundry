@@ -26,7 +26,7 @@ function RadialMenuOption ({ text, subtitle, to }) {
       }}
       //Playfair Display SC // Bio Sans
       className='myOption block z-10 w-fit h-fit leading-none 
-      font-bold text-end opacity-0'
+      font-bold text-end opacity-0 '
       style={{
         color: visible ? theme.menuHighlightColor : theme.menuColor,
         fontFamily: 'Bio Sans',
