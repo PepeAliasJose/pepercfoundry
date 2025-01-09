@@ -25,8 +25,11 @@ function App () {
     useContext(GlobalAnimationStatusContext)
 
   const { scrollYProgress } = useScroll()
-  //Desabilitar la restauración de scroll automatica
-  window.history.scrollRestoration = 'manual'
+
+  useEffect(() => {
+    //Desabilitar la restauración de scroll automatica
+    window.history.scrollRestoration = 'manual'
+  }, [])
 
   useMotionValueEvent(scrollYProgress, 'change', latest => {
     if (latest >= nameTitleBreakpoint && !logoTransparent) {
